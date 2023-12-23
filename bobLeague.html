@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        
+        <style>
+
+        body{
+            background-color: black;
+        }
+
+        .xdfix{
+            width: 100%;
+            height: 100%;
+            color: black;
+            background-color: black;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2023/03/032123_Patch_13_6_Notes_Banner_v3.jpg');            
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            z-index: -10;
+            opacity: 0.3;
+        }
+
+        .iron {background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/e9/Season_2022_-_Bronze.png/revision/latest/scale-to-width-down/130?cb=20220105214224');}
+        .bronze{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/e9/Season_2022_-_Bronze.png/revision/latest/scale-to-width-down/130?cb=20220105214224')}
+        .silver{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/4/44/Season_2022_-_Silver.png/revision/latest/scale-to-width-down/130?cb=20220105214225')}
+        .gold{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/8/8d/Season_2022_-_Gold.png/revision/latest/scale-to-width-down/130?cb=20220105214225')}
+        .platinum{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/3/3b/Season_2022_-_Platinum.png/revision/latest/scale-to-width-down/130?cb=20220105214225')}
+        .diamond{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/ee/Season_2022_-_Diamond.png/revision/latest/scale-to-width-down/130?cb=20220105214226')}
+        .master{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/eb/Season_2022_-_Master.png/revision/latest/scale-to-width-down/130?cb=20220105214311')}
+        .grandmaster{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/f/fc/Season_2022_-_Grandmaster.png/revision/latest/scale-to-width-down/130?cb=20220105214312')}
+        .challenger{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/0/02/Season_2022_-_Challenger.png/revision/latest/scale-to-width-down/130?cb=20220105214312')}
+
+        .romanNumeralButton {
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100px;
+            height: 100px;
+            background-color: #04131d;
+            border-radius: 10px;
+            border-color: #d29c4b;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 70px;
+            color: #d29c4b;
+            margin: 15px;
+        }
+
+        .button {
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 50px;
+            height: 50px;
+            background-color: #04131d;
+            border-radius: 10px;
+            border-color: #d29c4b;
+            z-index: 110;
+            margin: 4px;
+            margin-top: 8px;
+        }
+
+        .rankbuttons{
+
+            width: 560px;
+            height: 200px;
+            position: absolute;
+            background-color: #04131d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 4px solid #d29c4b;
+            border-radius: 10px;
+        }
+
+        .currentrank {
+            top: 15vh;
+            left: 20vw;
+            width: 560px;
+            height: 1000px;
+            position: relative;
+            background-color: blue;
+        }
+
+
+        </style>
+    
+    </head>
+
+    <body>
+        <div class="xdfix"> 
+        </div>
+
+        <div class="currentrank">
+            <div class="rankbuttons"> 
+                <button class="button iron"></button>
+                <button class="button bronze"></button>
+                <button class="button silver"></button>
+                <button class="button gold"></button>
+                <button class="button platinum"></button>
+                <button class="button diamond"></button>
+                <button class="button master"></button>
+                <button class="button grandmaster"></button>
+                <button class="button challenger"></button>
+                <button class="romanNumeralButton">I</button>
+                <button class="romanNumeralButton">II</button>
+                <button class="romanNumeralButton">III</button>
+                <button class="romanNumeralButton">IV</button>
+            </div>
+        </div>
+
+
+    </body>
+</html>

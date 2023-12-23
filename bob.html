@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: bubbles;
+            src: url(bubbles.ttf);
+        }
+        @font-face {
+            font-family: actualbubbles;
+            src: url(Bubbles-Regular.ttf);
+        }
+    
+        .bob {
+            text-align: center;
+            font-family: bubbles;
+        }
+
+        body {
+            background-image: url('https://i.imgur.com/5uIKc6y.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            color: white;
+        }
+
+
+
+        .container {
+            text-align: center;
+        }
+
+        .gameButton {
+            position: relative;
+            margin-left: 5vw;
+            margin-right: 5vw;
+            margin-top: 60px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            border: 5px solid black;
+            border-radius: 20px;
+            transition: 1s;
+        }
+        
+        .gameButton:hover{
+            border-color: white;
+        }
+
+        .logo {
+            top: 30px;
+            width:307px;
+            height: 300px;
+            position: relative;
+            left: 50%;
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+    <img class="logo" src="https://i.imgur.com/NVkS4qo.png">
+
+    <div class="container">
+        <button id="d1" class="gameButton" style="background-image: url(https://i.imgur.com/i9HH2o4.png);"></button>
+        <button id="d2" class="gameButton" style="background-image: url(https://i.imgur.com/Q8LGrzp.png);"></button>
+        <button id="d3" class="gameButton" style="background-image: url(https://i.imgur.com/LpRKcR3.png);"></button>
+    </div>
+
+    <script>
+        function updateButtonSize() {
+            const idarray = ["d1", "d2", "d3"]
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(idarray[i]).style.width = 250 + window.innerWidth/20 + "px";
+                document.getElementById(idarray[i]).style.height = 330 + window.innerWidth/12 + "px";
+            } 
+        }
+        updateButtonSize()
+        window.onresize = updateButtonSize;
+    </script>
+
+</body>
+
+
+</html>
