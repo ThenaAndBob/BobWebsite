@@ -6,8 +6,7 @@ import "dotenv/config";
 
 import path from "path";
 
-process.env.PAYPAL_CLIENT_ID = "AYoxGdl5RlbEv6ye9uGExKeSLmUU24A389LM1xbVucKYz2WlMV2qmId06oEt05X39D1Tl2UX0dVexRnx"
-process.env.PAYPAL_CLIENT_SECRET = "ELFf_KQqGaP_Mw_PFarBc4ErVhdSiQ0SfAIfzd7lRucVVw3TOPS36n4kf9st3F4PRS5gYkMKM7GaX3kC"
+
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8888 } = process.env;
 console.log(process.env)
 const base = "https://api-m.paypal.com";
