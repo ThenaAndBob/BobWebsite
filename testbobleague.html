@@ -171,6 +171,16 @@
                 <hr style="border: 0 none; height:5px; background-color: #d29c4b;">
                 <h2 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Silver IV -> Silver I</b></h2>                
                 <button id="checkoutPayment" onclick="checkout()" class="checkoutButton" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >£0 - Proceed to Payment</button>
+
+                <script async
+                  src="https://js.stripe.com/v3/buy-button.js">
+                </script>
+
+                <stripe-buy-button
+                buy-button-id="buy_btn_1OVwpgDGfuBnaQvUvBBc7fUk"
+                publishable-key="pk_test_51OVvlADGfuBnaQvUA4vK4SzyYFt2qnvZvEQwSHKCYJeL0Ks4UjX3hLwBcKTlSkuMisxP8TX6Ib5Lielv47TIWDrq00mUlqu5hn"
+                >
+                </stripe-buy-button>
             </div>
         </div>
 
@@ -224,7 +234,9 @@
         updateButtonSize();
         window.onresize = updateButtonSize;
 
-        </script>
+        
+
+    </script>
 </body>
 
 
