@@ -50,11 +50,11 @@ window.paypal
         try {
           const orderData = await response.json();
         } catch (error) {
-          console.log(orderData)
+          console.log("fek");
         }
         
         console.log(orderData);
-
+        console.log("kek");
         if (orderData.id) {
 
           return orderData.id;
