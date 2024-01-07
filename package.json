@@ -3,7 +3,6 @@
   "description": "Sample Node.js web app to integrate PayPal Standard Checkout for online payments",
   "version": "1.0.0",
   "main": "kek.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon kek.js",
