@@ -48,7 +48,7 @@ window.paypal
 
         console.log("b");
         try {
-          const orderData = await response.json();
+          const orderData = await response.text();
         } catch (error) {
           console.log("fek");
         }
