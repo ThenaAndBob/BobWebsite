@@ -14,7 +14,7 @@ window.paypal
       console.log("a");
       try {
 
-        const response = await fetch("http://localhost:8888/api/orders", {
+        const response = await fetch("/api/orders", {
 
           method: "POST",
           
