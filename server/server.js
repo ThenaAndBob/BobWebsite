@@ -6,7 +6,6 @@ import "dotenv/config";
 
 import path from "path";
 
-
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8888 } = process.env;
 console.log(process.env)
 const base = "https://api-m.paypal.com";
@@ -278,7 +277,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.listen(8888, '127.0.0.1', () => {
+app.listen(PORT, () => {
 
   console.log(`Node server listening at http://localhost:${PORT}/`);
 
