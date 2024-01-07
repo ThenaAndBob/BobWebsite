@@ -47,7 +47,12 @@ window.paypal
         });
 
         console.log("b");
-        const orderData = await response.json();
+        try {
+          const orderData = await response.json();
+        } catch (error) {
+          console.log(orderData)
+        }
+        
         console.log(orderData);
 
         if (orderData.id) {
