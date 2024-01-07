@@ -45,13 +45,10 @@ window.paypal
           }),
 
         });
-
+        console.log(response);
         console.log("b");
-        try {
-          const orderData = await response.text();
-        } catch (error) {
-          console.log("fek");
-        }
+        const orderData = await response.json();
+        console.log("fek");
         
         console.log(orderData);
         console.log("kek");
