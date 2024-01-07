@@ -48,7 +48,7 @@ window.paypal
 
 
         const orderData = await response.json();
-
+        console.log(orderData);
 
         if (orderData.id) {
 
