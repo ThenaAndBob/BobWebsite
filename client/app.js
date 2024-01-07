@@ -11,19 +11,19 @@ window.paypal
     },
 
     async createOrder() {
-
+      console.log("a");
       try {
 
         const response = await fetch("/api/orders", {
 
           method: "POST",
-
+          
           headers: {
 
             "Content-Type": "application/json",
 
           },
-
+          
           // use the "body" param to optionally pass additional order information
 
           // like product ids and quantities
@@ -46,7 +46,7 @@ window.paypal
 
         });
 
-
+        console.log("b");
         const orderData = await response.json();
         console.log(orderData);
 
