@@ -170,17 +170,7 @@
                 <h1 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Checkout</b></h1>
                 <hr style="border: 0 none; height:5px; background-color: #d29c4b;">
                 <h2 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Silver IV -> Silver I</b></h2>                
-                <button id="checkoutPayment" onclick="checkout()" class="checkoutButton" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >£0 - Proceed to Payment</button>
-
-                <script async
-                  src="https://js.stripe.com/v3/buy-button.js">
-                </script>
-
-                <stripe-buy-button
-                buy-button-id="buy_btn_1OVwpgDGfuBnaQvUvBBc7fUk"
-                publishable-key="pk_test_51OVvlADGfuBnaQvUA4vK4SzyYFt2qnvZvEQwSHKCYJeL0Ks4UjX3hLwBcKTlSkuMisxP8TX6Ib5Lielv47TIWDrq00mUlqu5hn"
-                >
-                </stripe-buy-button>
+                <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >£0 - Proceed to Payment</button>
             </div>
         </div>
 
@@ -193,6 +183,7 @@
         // ffoawgopak my life but these are the variables that will be used to calculate payment
         var rankStore= ["iron", "iron"]
         var divisionStore = ["IV", "IV"]
+        var s = 0;
 
         function updateButtonSize() {
             const idarray = ["d1", "d2", "d3"]
@@ -216,7 +207,6 @@
                 rankNumber.innerHTML = newRank;
                 divisionStore[oneOrTwo-1] = newRank;
             }
-            console.log(rankStore, divisionStore)
         }
 
         // Prices 
@@ -224,17 +214,31 @@
         function checkout(){
             startIndex = ranks.indexOf(rankStore[0])*4 + ranks.indexOf(divisionStore[0])-9;
             endIndex = ranks.indexOf(rankStore[1])*4 + ranks.indexOf(divisionStore[1])-9;
-            var s = 0;
+            s = 0
             prices.slice(startIndex, endIndex).forEach(x => s+=x);
-            console.log(s);
             document.getElementById("checkoutPayment").innerHTML = "£" + s + " - Proceed to Payment";
         }
+
+        function realCheckout(){
+            const priceLinks = [];
+            window.location.href = priceLinks[s-1]
+            $.ajax({
+            type: "POST",
+            url: "~/sql.py",
+            data: { param: text}
+            }).done(function( o ) {
+                console.log("the fuck am i doin")
+            });
+        }
+
 
 
         updateButtonSize();
         window.onresize = updateButtonSize;
 
     </script>
+
+    
 </body>
 
 
