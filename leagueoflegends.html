@@ -116,7 +116,6 @@
 </head>
 
 <body>
-
     <div class="container">
         <div id="d1" class="gameButton" >
             <div class="currentrank">
@@ -220,15 +219,10 @@
         }
 
         function realCheckout(){
-            const priceLinks = [];
-            window.location.href = priceLinks[s-1]
-            $.ajax({
-            type: "POST",
-            url: "~/sql.py",
-            data: { param: text}
-            }).done(function( o ) {
-                console.log("the fuck am i doin")
-            });
+            var xhttp;
+            xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "addrow.php", true);
+            xhttp.send();
         }
 
 
@@ -237,8 +231,8 @@
         window.onresize = updateButtonSize;
 
     </script>
-
     
+
 </body>
 
 
