@@ -36,15 +36,15 @@
             border: 1px solid black;
         }
 
-        .iron {background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/e9/Season_2022_-_Bronze.png/revision/latest/scale-to-width-down/130?cb=20220105214224');}
-        .bronze{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/e9/Season_2022_-_Bronze.png/revision/latest/scale-to-width-down/130?cb=20220105214224')}
-        .silver{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/4/44/Season_2022_-_Silver.png/revision/latest/scale-to-width-down/130?cb=20220105214225')}
-        .gold{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/8/8d/Season_2022_-_Gold.png/revision/latest/scale-to-width-down/130?cb=20220105214225')}
-        .platinum{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/3/3b/Season_2022_-_Platinum.png/revision/latest/scale-to-width-down/130?cb=20220105214225')}
-        .diamond{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/ee/Season_2022_-_Diamond.png/revision/latest/scale-to-width-down/130?cb=20220105214226')}
-        .master{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/e/eb/Season_2022_-_Master.png/revision/latest/scale-to-width-down/130?cb=20220105214311')}
-        .grandmaster{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/f/fc/Season_2022_-_Grandmaster.png/revision/latest/scale-to-width-down/130?cb=20220105214312')}
-        .challenger{background-image: url('https://i.imgur.com/Uv7UhQE.png')}
+        .iron {background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/f/f8/Season_2023_-_Iron.png/revision/latest?cb=20231007195831');}
+        .bronze{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/c/cb/Season_2023_-_Bronze.png/revision/latest?cb=20231007195824')}
+        .silver{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/c/c4/Season_2023_-_Silver.png/revision/latest?cb=20231007195834')}
+        .gold{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/7/78/Season_2023_-_Gold.png/revision/latest?cb=20231007195829')}
+        .platinum{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/b/bd/Season_2023_-_Platinum.png/revision/latest?cb=20231007195833')}
+        .diamond{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/3/37/Season_2023_-_Diamond.png/revision/latest?cb=20231007195826')}
+        .master{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/d/d5/Season_2023_-_Master.png/revision/latest?cb=20231007195832')}
+        .grandmaster{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/6/64/Season_2023_-_Grandmaster.png/revision/latest?cb=20231007195830')}
+        .challenger{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/1/14/Season_2023_-_Challenger.png/revision/latest?cb=20231007195825')}
 
         .romanNumeralButton {
             background-repeat: no-repeat;
@@ -219,10 +219,17 @@
         }
 
         function realCheckout(){
-            var xhttp;
-            xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "addrow.php", true);
-            xhttp.send();
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = () => {
+            if (req.readyState == XMLHttpRequest.DONE) {
+                console.log(req.responseText);
+            }
+            };
+            
+            req.open("POST", "https://api.jsonbin.io/v3/b", true);
+            req.setRequestHeader("Content-Type", "application/json");
+            req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
+            req.send('{"' + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + s + '"}');
         }
 
 

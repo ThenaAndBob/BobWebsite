@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body {
+            background-image: url('https://media.discordapp.net/attachments/415533800077131786/1197247688354308196/sY3qILV8rDfzznjhElnuAcblw8iLzApZJP3eqbAqEt5muwNRmZRXBoeO4UKjKKUqdt.png?ex=65ba92cc&is=65a81dcc&hm=7c655a30deae1df1b9b4d0df82a64293041079acfd38180e85ec39f73c9549d7&=&format=webp&quality=lossless&width=1151&height=647');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            color: white;
+        }
+
+        .container {
+            top: 120px;
+            position: relative;
+            display: flex;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gameButton {
+            position: relative;
+            margin-left: 2vw;
+            margin-right: 2vw;
+            margin-top: 60px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid black;
+        }
+
+        .bronze{background-image: url('https://i.imgur.com/tAGTnxa.png')}
+        .silver{background-image: url('https://i.imgur.com/wqWzIMZ.png')}
+        .gold{background-image: url('https://i.imgur.com/5aLApsB.png')}
+        .platinum{background-image: url('https://i.imgur.com/KctiVAu.png')}
+        .diamond{background-image: url('https://i.imgur.com/rGbaSYN.png')}
+        .master{background-image: url('https://i.imgur.com/kl5YjI0.png')}
+        .grandmaster{background-image: url('https://i.imgur.com/qdWlM12.png')}
+
+        .romanNumeralButton {
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 13%;
+            height: 36%;
+            background-color: #04131d;
+            border-radius: 10px;
+            border-color: #d29c4b;;
+            border-width: 3px;
+            font-family: Impact, 'Arial Narrow Bold', sans-serif;
+            font-size: 50px;
+            color: #d29c4b;;
+            margin: 10px;
+            border-style: solid;
+        }
+
+        .button {
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 12%;
+            height: 33%;
+            background-color: #04131d;
+            border-radius: 10px;
+            border-color: #d29c4b;;
+            z-index: 110;
+            margin: 4px;
+            border-width: 3px;
+            margin-top: 8px;
+            border-style: solid;
+        }
+
+        .rankbuttons{
+            width: 100%;
+            height: 31%;
+            position: absolute;
+            background-color: #04131d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            top: 69%;
+            text-align: center;
+        }
+
+        .currentrank {
+            height: 100%;
+            position: relative;
+            background-color: #04131d;
+            border: 5px solid #d29c4b;;
+            align-items: center;
+        }
+
+        .selected {
+            width: 50%;
+            aspect-ratio: 1 / 1;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-left: 25%;
+        }
+
+        .checkoutButton {
+            width: 90%;
+            height: 13%;
+            background-color: #000662;
+            border-radius: 5px;
+            border-color: #d29c4b;;
+            border-width: 3px;
+            
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div id="d1" class="gameButton" >
+            <div class="currentrank">
+                <h1 style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Current Rank</b></h1>
+                <div id="rank1" class="selected silver"></div>
+                <div id="rankNumber1" style="font-size: 40px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: #d29c4b;;">5</div>
+                <div onclick="checkout()" class="rankbuttons"> 
+                    <button onclick="chooseRankScript(0, 1)" class="button bronze"></button>
+                    <button onclick="chooseRankScript(1, 1)" class="button silver"></button>
+                    <button onclick="chooseRankScript(2, 1)" class="button gold"></button>
+                    <button onclick="chooseRankScript(3, 1)" class="button platinum"></button>
+                    <button onclick="chooseRankScript(4, 1)" class="button diamond"></button>
+                    <button onclick="chooseRankScript(5, 1)" class="button master"></button>
+                    <button onclick="chooseRankScript(6, 1)" class="button grandmaster"></button>
+                    <button onclick="chooseRankScript(7, 1)" class="romanNumeralButton">5</button>
+                    <button onclick="chooseRankScript(8, 1)" class="romanNumeralButton">4</button>
+                    <button onclick="chooseRankScript(9, 1)" class="romanNumeralButton">3</button>
+                    <button onclick="chooseRankScript(10, 1)" class="romanNumeralButton">2</button> 
+                    <button onclick="chooseRankScript(11, 1)" class="romanNumeralButton">1</button> 
+                </div>
+            </div>
+        </div>
+
+        <div id="d2" class="gameButton" >
+            <div class="currentrank">
+                <h1 style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Desired Rank</b></h1>
+                <div id="rank2" class="selected gold"></div>
+                <div id="rankNumber2" style="font-size: 40px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: #d29c4b;;">5</div>
+                <div onclick="checkout()" class="rankbuttons"> 
+                    <button onclick="chooseRankScript(0, 2)" class="button bronze"></button>
+                    <button onclick="chooseRankScript(1, 2)" class="button silver"></button>
+                    <button onclick="chooseRankScript(2, 2)" class="button gold"></button>
+                    <button onclick="chooseRankScript(3, 2)" class="button platinum"></button>
+                    <button onclick="chooseRankScript(4, 2)" class="button diamond"></button>
+                    <button onclick="chooseRankScript(5, 2)" class="button master"></button>
+                    <button onclick="chooseRankScript(6, 2)" class="button grandmaster"></button>
+                    <button onclick="chooseRankScript(7, 2)" class="romanNumeralButton">5</button>
+                    <button onclick="chooseRankScript(8, 2)" class="romanNumeralButton">4</button>
+                    <button onclick="chooseRankScript(9, 2)" class="romanNumeralButton">3</button>
+                    <button onclick="chooseRankScript(10, 2)" class="romanNumeralButton">2</button> <!--I hate it-->
+                    <button onclick="chooseRankScript(11, 2)" class="romanNumeralButton">1</button> <!--I hate it-->
+                </div>
+            </div>
+        </div>
+        
+        <div id="d3" class="gameButton">
+            <div class="currentrank">
+                <div>
+                    <img src="img_girl.jpg" width="500" height="600"> 
+                    <h1 style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Checkout</b></h1>
+                </div> <!--Bobs boosting logo here ig-->
+                <hr style="border: 0 none; height:5px; background-color: #d29c4b;;">
+                <h2 id="conclusion" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Silver 5 -> Gold 5</b></h2>                
+                <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >£0 - Proceed to Payment</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Globals cause fuck it XD
+        const ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "5", "4", "3", "2", "1"];
+        
+        // ffoawgopak my life but these are the variables that will be used to calculate payment
+        var rankStore= ["Silver", "Gold"]
+        var divisionStore = ["5", "5"]
+        var s = 0;
+
+        function updateButtonSize() {
+            const idarray = ["d1", "d2", "d3"]
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(idarray[i]).style.width = 400 + window.innerWidth/20 + "px";
+                document.getElementById(idarray[i]).style.height = 462 + window.innerWidth/12 + "px";
+            } 
+        }
+
+        function chooseRankScript(x, oneOrTwo) {
+            newRank = ranks[x];
+
+            if (x <= 6) {
+                rankImage = document.getElementById("rank" + oneOrTwo);
+                rankImage.classList = ["selected"];
+                rankImage.classList.add(newRank.toLowerCase());
+                rankStore[oneOrTwo-1] = newRank;
+            }
+            else {
+                rankNumber = document.getElementById("rankNumber" + oneOrTwo);
+                rankNumber.innerHTML = newRank;
+                divisionStore[oneOrTwo-1] = newRank;
+            }
+            document.getElementById("conclusion").innerHTML = rankStore[0] + " " + divisionStore[0] + " " + "->" +  " " + rankStore[1] + " " + divisionStore[1]
+        }
+
+        // Prices 
+        const prices = [3,3,3,4, 5,5,5,6, 7,7,7,8, 9,9,9,10, 11,11,11,12, 13,15,17,19, 25,30,35,40]
+        function checkout(){
+            startIndex = ranks.indexOf(rankStore[0])*5 + ranks.indexOf(divisionStore[0])-7;
+            endIndex = ranks.indexOf(rankStore[1])*5 + ranks.indexOf(divisionStore[1])-7;
+            console.log(startIndex, endIndex, rankStore)
+            s = 0
+            prices.slice(startIndex, endIndex).forEach(x => s+=x);
+            document.getElementById("checkoutPayment").innerHTML = "£" + s + " - Proceed to Payment";
+        }
+
+        function realCheckout(){
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = () => {
+            if (req.readyState == XMLHttpRequest.DONE) {
+                console.log(req.responseText);
+            }
+            };
+            
+            req.open("POST", "https://api.jsonbin.io/v3/b", true);
+            req.setRequestHeader("Content-Type", "application/json");
+            req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
+            req.send('{"' + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + s + '"}');
+        }
+
+
+
+        updateButtonSize();
+        window.onresize = updateButtonSize;
+
+    </script>
+    
+
+</body>
+
+
+</html>
