@@ -33,18 +33,16 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            border: 1px solid black;
         }
 
-        .iron {background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/f/f8/Season_2023_-_Iron.png/revision/latest?cb=20231007195831');}
-        .bronze{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/c/cb/Season_2023_-_Bronze.png/revision/latest?cb=20231007195824')}
-        .silver{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/c/c4/Season_2023_-_Silver.png/revision/latest?cb=20231007195834')}
-        .gold{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/7/78/Season_2023_-_Gold.png/revision/latest?cb=20231007195829')}
+        .iron {background-image: url('https://i.imgur.com/Tj2BpH3.png');}
+        .bronze{background-image: url('https://i.imgur.com/sPrqDTq.png')}
+        .silver{background-image: url('https://i.imgur.com/NiCijlD.png')}
+        .gold{background-image: url('https://i.imgur.com/9wXycG8.png')}
         .platinum{background-image: url('https://i.imgur.com/z4I2pt9.png')}
-        .diamond{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/3/37/Season_2023_-_Diamond.png/revision/latest?cb=20231007195826')}
-        .master{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/d/d5/Season_2023_-_Master.png/revision/latest?cb=20231007195832')}
-        .grandmaster{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/6/64/Season_2023_-_Grandmaster.png/revision/latest?cb=20231007195830')}
-        .challenger{background-image: url('https://static.wikia.nocookie.net/leagueoflegends/images/1/14/Season_2023_-_Challenger.png/revision/latest?cb=20231007195825')}
+        .emerald{background-image: url('https://i.imgur.com/iltHUX5.png');}
+        .diamond{background-image: url('https://i.imgur.com/fy4NjAA.png')}
+        .master{background-image: url('https://i.imgur.com/gAhdiIa.png')}
 
         .romanNumeralButton {
             background-repeat: no-repeat;
@@ -63,8 +61,8 @@
         .button {
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            width: 9%;
-            height: 25%;
+            width: 9.9%;
+            height: 27.5%;
             background-color: #04131d;
             border-radius: 10px;
             border-color: #d29c4b;
@@ -91,7 +89,7 @@
             position: relative;
             background-color: #04131d;
             border: 5px solid #d29c4b;
-            align-items: center;
+            color: #d29c4b;
         }
 
         .selected {
@@ -104,11 +102,37 @@
 
         .checkoutButton {
             width: 90%;
-            height: 13%;
+            height: 25%;
             background-color: #000662;
             border-radius: 5px;
             border-color: #d29c4b;
             border-width: 4px;
+        }
+
+        .checkoutContainer{
+            background-color: #04131d;
+            height: 70%;
+            position: relative;
+            border: 5px solid #d29c4b;
+            color: #d29c4b;
+            width: 428px;
+            height: 350px;
+        }
+
+        .box{
+            transform: scale(2);
+            vertical-align: middle;
+        }
+
+        .extraboxes{
+            justify-content: space-between;
+            display: flex;
+            color: white; 
+            vertical-align: middle; 
+            font-size: 18px; 
+            font-family: Arial, Helvetica, sans-serif;
+            color: #d29c4b;
+            margin:25px;
         }
 
     </style>
@@ -119,7 +143,7 @@
     <div class="container">
         <div id="d1" class="gameButton" >
             <div class="currentrank">
-                <h1 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Current Rank</b></h1>
+                <h1 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-align: center;"><b>Current Rank</b></h1>
                 <div id="rank1" class="selected iron"></div>
                 <div id="rankNumber1" style="font-size: 40px; font-family: 'Times New Roman', Times, serif; color: #d29c4b;">IV</div>
                 <div onclick="checkout()" class="rankbuttons"> 
@@ -128,14 +152,15 @@
                     <button onclick="chooseRankScript(2, 1)" class="button silver"></button>
                     <button onclick="chooseRankScript(3, 1)" class="button gold"></button>
                     <button onclick="chooseRankScript(4, 1)" class="button platinum"></button>
-                    <button onclick="chooseRankScript(5, 1)" class="button diamond"></button>
-                    <button onclick="chooseRankScript(6, 1)" class="button master"></button>
-                    <button onclick="chooseRankScript(7, 1)" class="button grandmaster"></button>
-                    <button onclick="chooseRankScript(8, 1)" class="button challenger"></button>
-                    <button onclick="chooseRankScript(9, 1)" class="romanNumeralButton">IV</button>
-                    <button onclick="chooseRankScript(10, 1)" class="romanNumeralButton">III</button>
-                    <button onclick="chooseRankScript(11, 1)" class="romanNumeralButton">II</button>
-                    <button onclick="chooseRankScript(12, 1)" class="romanNumeralButton">I</button> 
+                    <button onclick="chooseRankScript(5, 1)" class="button emerald"></button>
+                    <button onclick="chooseRankScript(6, 1)" class="button diamond"></button>
+                    <button onclick="chooseRankScript(7, 1)" class="button master"></button>
+                    <div id="div1" style="width: 100%;">
+                        <button onclick="chooseRankScript(8, 1)" class="romanNumeralButton">IV</button>
+                        <button onclick="chooseRankScript(9, 1)" class="romanNumeralButton">III</button>
+                        <button onclick="chooseRankScript(10, 1)" class="romanNumeralButton">II</button>
+                        <button onclick="chooseRankScript(11, 1)" class="romanNumeralButton">I</button>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -151,24 +176,34 @@
                     <button onclick="chooseRankScript(2, 2)" class="button silver"></button>
                     <button onclick="chooseRankScript(3, 2)" class="button gold"></button>
                     <button onclick="chooseRankScript(4, 2)" class="button platinum"></button>
-                    <button onclick="chooseRankScript(5, 2)" class="button diamond"></button>
-                    <button onclick="chooseRankScript(6, 2)" class="button master"></button>
-                    <button onclick="chooseRankScript(7, 2)" class="button grandmaster"></button>
-                    <button onclick="chooseRankScript(8, 2)" class="button challenger"></button>
-                    <button onclick="chooseRankScript(9, 2)" class="romanNumeralButton">IV</button>
-                    <button onclick="chooseRankScript(10, 2)" class="romanNumeralButton">III</button>
-                    <button onclick="chooseRankScript(11, 2)" class="romanNumeralButton">II</button>
-                    <button onclick="chooseRankScript(12, 2)" class="romanNumeralButton">I</button> <!--I hate it-->
+                    <button onclick="chooseRankScript(5, 2)" class="button emerald"></button>
+                    <button onclick="chooseRankScript(6, 2)" class="button diamond"></button>
+                    <button onclick="chooseRankScript(7, 2)" class="button master"></button>
+                    <div id="div2" style="width: 100%;">
+                        <button onclick="chooseRankScript(8, 2)" class="romanNumeralButton">IV</button>
+                        <button onclick="chooseRankScript(9, 2)" class="romanNumeralButton">III</button>
+                        <button onclick="chooseRankScript(10, 2)" class="romanNumeralButton">II</button>
+                        <button onclick="chooseRankScript(11, 2)" class="romanNumeralButton">I</button> <!--I hate it-->
+                    </div>
                 </div>
             </div>
         </div>
         
         <div id="d3" class="gameButton">
-            <div class="currentrank">
-                <div></div> <!--Bobs boosting logo here ig-->
-                <h1 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Checkout</b></h1>
+            <div class="checkoutContainer">
+                <h1 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Checkout</b></h1>
+                <h2 id="conclusion" style="font-family: Arial, Helvetica, sans-serif">Iron IV → Iron IV</h2>                
+
+
                 <hr style="border: 0 none; height:5px; background-color: #d29c4b;">
-                <h2 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Silver IV -> Silver I</b></h2>                
+
+                <div class="extraboxes" onclick=toggle()>
+                    <b>Play with booster (+50%)</b> <input onclick=toggle() type="checkbox" id="duobutton" class="box">
+                </div>
+                <div class="extraboxes">
+                    <b>Additional wins</b><input type="number" id="quantity" oninput="checkout()" name="quantity" min="0" max="4"> 
+                </div>
+                
                 <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >£0 - Proceed to Payment</button>
             </div>
         </div>
@@ -177,28 +212,66 @@
 
     <script>
         // Globals cause fuck it XD
-        const ranks = ["iron", "bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster", "challenger", "IV", "III", "II", "I"];
+        const ranks = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond", "Master", "IV", "III", "II", "I", " "];
         
         // ffoawgopak my life but these are the variables that will be used to calculate payment
-        var rankStore= ["iron", "iron"]
+        var rankStore= ["Iron", "Iron"]
         var divisionStore = ["IV", "IV"]
         var s = 0;
 
+        function toggle(){
+            console.log("sadasdawdsad");
+            x = document.getElementById("duobutton");
+            if (x.checked == false){
+                x.checked = true;
+            } 
+            else {
+                x.checked = false;
+            }
+            checkout();
+        }
+
         function updateButtonSize() {
-            const idarray = ["d1", "d2", "d3"]
-            for (let i = 0; i < 3; i++) {
+            const idarray = ["d1", "d2"]
+            for (let i = 0; i < 2; i++) {
                 document.getElementById(idarray[i]).style.width = 400 + window.innerWidth/20 + "px";
                 document.getElementById(idarray[i]).style.height = 462 + window.innerWidth/12 + "px";
             } 
+            console.log(window.innerWidth)
+            if (window.innerWidth < 1635){
+                document.getElementById("d3").style.top = "0px";
+            }
+            else{
+                document.getElementById("d3").style.top = "120px";
+            }
         }
 
         function chooseRankScript(x, oneOrTwo) {
             newRank = ranks[x];
+            console.log(ranks, x, oneOrTwo)
 
-            if (x <= 8) {
+            if (x <= 7) {
+                if (newRank=="Master"){
+                    if (oneOrTwo==1){
+                        document.getElementById("rankNumber" + "1").innerHTML = "<input type='number' oninput='checkout()' id='LP' name='LPname' min='0' max='1500'><br>LP";
+                        document.getElementById("div1").innerHTML = "";
+                        divisionStore[0] = " ";
+                    }
+                    document.getElementById("div2").innerHTML = "Use the 'Additional Wins' to decide how many wins you want in master elo."
+                    temp = document.getElementById("rank" + "2");
+                    temp.classList = ["selected"];
+                    temp.classList.add("master");
+                    document.getElementById("rankNumber" + "2").innerHTML = "";
+                    rankStore[1] = "Master";
+                    divisionStore[1] = " ";
+                }
+                else if (rankStore[oneOrTwo-1]=="Master"){
+                    romanButtons(oneOrTwo);
+                }
+                console.log(rankStore);
                 rankImage = document.getElementById("rank" + oneOrTwo);
                 rankImage.classList = ["selected"]
-                rankImage.classList.add(newRank);
+                rankImage.classList.add(newRank.toLowerCase());
                 rankStore[oneOrTwo-1] = newRank;
             }
             else {
@@ -206,34 +279,68 @@
                 rankNumber.innerHTML = newRank;
                 divisionStore[oneOrTwo-1] = newRank;
             }
+            conclusion = document.getElementById("conclusion");
+            conclusion.innerHTML = rankStore[0] + " " + divisionStore[0] + " " + "→" +  " " + rankStore[1] + " " + divisionStore[1]
         }
 
         // Prices 
-        const prices = [3,3,3,4, 5,5,5,6, 7,7,7,8, 9,9,9,10, 11,11,11,12, 13,15,17,19, 25,30,35,40]
+        const prices = [3,3,3,4, 5,5,5,6, 7,7,7,8, 9,9,9,10, 11,11,11,12, 13,15,17,19, 25,30,35,40, 50, 60, 70, 80, 90, 100, 110, 120, 130]
         function checkout(){
-            startIndex = ranks.indexOf(rankStore[0])*4 + ranks.indexOf(divisionStore[0])-9;
-            endIndex = ranks.indexOf(rankStore[1])*4 + ranks.indexOf(divisionStore[1])-9;
-            s = 0
-            prices.slice(startIndex, endIndex).forEach(x => s+=x);
-            document.getElementById("checkoutPayment").innerHTML = "£" + s + " - Proceed to Payment";
+            if (rankStore[0]=="Master"){
+                s = Math.ceil(document.getElementById("quantity").value*(15 + document.getElementById("LP").value/40))
+            }
+            else{
+                startIndex = ranks.indexOf(rankStore[0])*4 + ranks.indexOf(divisionStore[0])-8;
+                endIndex = ranks.indexOf(rankStore[1])*4 + ranks.indexOf(divisionStore[1])-8;
+                s = 0
+                prices.slice(startIndex, endIndex).forEach(x => s+=x);
+                s += document.getElementById("quantity").value*prices[endIndex]/4
+            }
+            so = s
+            if (document.getElementById("duobutton").checked == true){
+                so = Math.floor(so*1.5)
+            }
+            document.getElementById("checkoutPayment").innerHTML = "£" + Math.floor(so) + " - Proceed to Payment";
         }
 
         function realCheckout(){
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = () => {
-            if (req.readyState == XMLHttpRequest.DONE) {
-                console.log(req.responseText);
+            var v = ""
+            if (document.getElementById("duobutton").checked == true){
+                v = "D"
+                s = Math.floor(s*1.5)
             }
-            };
-            
-            req.open("POST", "https://api.jsonbin.io/v3/b", true);
-            req.setRequestHeader("Content-Type", "application/json");
-            req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
-            req.send('{"' + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + s + '"}');
+            else{
+                v = "S"
+            }
+
+            if (s > 0){
+                let req = new XMLHttpRequest();
+                req.onreadystatechange = () => {
+                if (req.readyState == XMLHttpRequest.DONE) {
+                    console.log(req.responseText);
+                }
+                };
+                
+                req.open("POST", "https://api.jsonbin.io/v3/b", true);
+                req.setRequestHeader("Content-Type", "application/json");
+                req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
+                req.send('{"' + v + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + s + '"}');
+            }
+            }
+
+        function romanButtons(oort){
+            if (oort == 2){
+                document.getElementById("div2").innerHTML = "<button onclick='chooseRankScript(8, 2)' class='romanNumeralButton'>IV</button><button onclick='chooseRankScript(9, 2)' class='romanNumeralButton'>III</button><button onclick='chooseRankScript(10, 2)' class='romanNumeralButton'>II</button><button onclick='chooseRankScript(11, 2)' class='romanNumeralButton'>I</button>";
+                document.getElementById("rankNumber" + "2").innerHTML = "IV";
+                divisionStore[1] = "IV"
+            }
+            document.getElementById("div1").innerHTML = "<button onclick='chooseRankScript(8, 1)' class='romanNumeralButton'>IV</button><button onclick='chooseRankScript(9, 1)' class='romanNumeralButton'>III</button><button onclick='chooseRankScript(10, 1)' class='romanNumeralButton'>II</button><button onclick='chooseRankScript(11, 1)' class='romanNumeralButton'>I</button>";
+            document.getElementById("rankNumber" + "1").innerHTML = "IV";
+            divisionStore[0] = "IV"
         }
 
-
-
+        document.getElementById("quantity").value = 0;
+        document.getElementById("duobutton").checked = false;
         updateButtonSize();
         window.onresize = updateButtonSize;
 
