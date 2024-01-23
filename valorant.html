@@ -205,7 +205,7 @@
                 </div>
 
                 <h2 id="conclusion" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Iron 1 -> Iron 1</b></h2>                
-                <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >£0 - Proceed to Payment</button>
+                <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >€0 - Proceed to Payment</button>
             </div>
         </div>
 
@@ -298,7 +298,7 @@
                 so = so*1.5;
             }
             so = Math.floor(so);
-            document.getElementById("checkoutPayment").innerHTML = "£" + so + " - Proceed to Payment";
+            document.getElementById("checkoutPayment").innerHTML = "€" + so + " - Proceed to Payment";
         }
 
         function realCheckout(){
@@ -315,7 +315,7 @@
                 req.onreadystatechange = () => {
                 if (req.readyState == XMLHttpRequest.DONE) {
                     let a = Test.links;
-                    window.location.assign(links[so-1])
+                    window.location.assign(a[so-1])
                 }
                 };
                 
