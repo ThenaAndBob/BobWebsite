@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript"
+        src="paymentlinkScript.js">
+    </script>
     <style>
 
         body {
@@ -220,7 +223,6 @@
         var s = 0;
 
         function toggle(){
-            console.log("sadasdawdsad");
             x = document.getElementById("duobutton");
             if (x.checked == false){
                 x.checked = true;
@@ -237,7 +239,6 @@
                 document.getElementById(idarray[i]).style.width = 400 + window.innerWidth/20 + "px";
                 document.getElementById(idarray[i]).style.height = 462 + window.innerWidth/12 + "px";
             } 
-            console.log(window.innerWidth)
             if (window.innerWidth < 1635){
                 document.getElementById("d3").style.top = "0px";
             }
@@ -248,7 +249,6 @@
 
         function chooseRankScript(x, oneOrTwo) {
             newRank = ranks[x];
-            console.log(ranks, x, oneOrTwo)
 
             if (x <= 7) {
                 if (newRank=="Master"){
@@ -268,7 +268,6 @@
                 else if (rankStore[oneOrTwo-1]=="Master"){
                     romanButtons(oneOrTwo);
                 }
-                console.log(rankStore);
                 rankImage = document.getElementById("rank" + oneOrTwo);
                 rankImage.classList = ["selected"]
                 rankImage.classList.add(newRank.toLowerCase());
@@ -298,16 +297,16 @@
             }
             so = s
             if (document.getElementById("duobutton").checked == true){
-                so = Math.floor(so*1.5)
+                so = so*1.5;
             }
-            document.getElementById("checkoutPayment").innerHTML = "£" + Math.floor(so) + " - Proceed to Payment";
+            so = Math.floor(so);
+            document.getElementById("checkoutPayment").innerHTML = "£" + so + " - Proceed to Payment";
         }
 
         function realCheckout(){
             var v = ""
             if (document.getElementById("duobutton").checked == true){
                 v = "D"
-                s = Math.floor(s*1.5)
             }
             else{
                 v = "S"
@@ -317,16 +316,17 @@
                 let req = new XMLHttpRequest();
                 req.onreadystatechange = () => {
                 if (req.readyState == XMLHttpRequest.DONE) {
-                    console.log(req.responseText);
+                    let a = Test.links;
+                    window.location.assign(links[so-1])
                 }
                 };
                 
                 req.open("POST", "https://api.jsonbin.io/v3/b", true);
                 req.setRequestHeader("Content-Type", "application/json");
                 req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
-                req.send('{"' + v + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + s + '"}');
+                req.send('{"' + document.getElementById("quantity").value + v + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + so + '"}');
             }
-            }
+        }
 
         function romanButtons(oort){
             if (oort == 2){
@@ -337,6 +337,8 @@
             document.getElementById("div1").innerHTML = "<button onclick='chooseRankScript(8, 1)' class='romanNumeralButton'>IV</button><button onclick='chooseRankScript(9, 1)' class='romanNumeralButton'>III</button><button onclick='chooseRankScript(10, 1)' class='romanNumeralButton'>II</button><button onclick='chooseRankScript(11, 1)' class='romanNumeralButton'>I</button>";
             document.getElementById("rankNumber" + "1").innerHTML = "IV";
             divisionStore[0] = "IV"
+            rankStore[0] = "Diamond";
+            chooseRankScript(6, 1);
         }
 
         document.getElementById("quantity").value = 0;

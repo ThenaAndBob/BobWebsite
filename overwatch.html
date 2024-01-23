@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript"
+        src="paymentlinkScript.js">
+    </script>
     <style>
 
         body {
@@ -33,7 +36,6 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            border: 1px solid black;
         }
 
         .bronze{background-image: url('https://i.imgur.com/tAGTnxa.png')}
@@ -92,7 +94,7 @@
             height: 100%;
             position: relative;
             background-color: #04131d;
-            border: 5px solid #d29c4b;;
+            border: 5px solid #d29c4b;
             align-items: center;
         }
 
@@ -106,12 +108,38 @@
 
         .checkoutButton {
             width: 90%;
-            height: 13%;
+            height: 25%;
             background-color: #000662;
             border-radius: 5px;
             border-color: #d29c4b;;
             border-width: 3px;
             
+        }
+
+        .checkoutContainer{
+            background-color: #04131d;
+            height: 70%;
+            position: relative;
+            border: 5px solid #d29c4b;
+            color: #d29c4b;
+            width: 428px;
+            height: 350px;
+        }
+
+        .box{
+            transform: scale(2);
+            vertical-align: middle;
+        }
+
+        .extraboxes{
+            justify-content: space-between;
+            display: flex;
+            color: white; 
+            vertical-align: middle; 
+            font-size: 18px; 
+            font-family: Arial, Helvetica, sans-serif;
+            color: #d29c4b;
+            margin:25px;
         }
 
     </style>
@@ -165,12 +193,17 @@
         </div>
         
         <div id="d3" class="gameButton">
-            <div class="currentrank">
-                <div>
-                    <img src="img_girl.jpg" width="500" height="600"> 
-                    <h1 style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Checkout</b></h1>
-                </div> <!--Bobs boosting logo here ig-->
+            <div class="checkoutContainer">
+                <h1 style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Checkout</b></h1>
                 <hr style="border: 0 none; height:5px; background-color: #d29c4b;;">
+
+                <div class="extraboxes" onclick=toggle()>
+                    <b>Play with booster (+50%)</b> <input onclick=toggle() type="checkbox" id="duobutton" class="box">
+                </div>
+                <div class="extraboxes">
+                    <b>Additional wins</b><input type="number" id="quantity" oninput="checkout()" name="quantity" min="0" max="4"> 
+                </div>
+
                 <h2 id="conclusion" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Silver 5 -> Gold 5</b></h2>                
                 <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >£0 - Proceed to Payment</button>
             </div>
@@ -181,18 +214,34 @@
     <script>
         // Globals cause fuck it XD
         const ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "5", "4", "3", "2", "1"];
-        
         // ffoawgopak my life but these are the variables that will be used to calculate payment
         var rankStore= ["Silver", "Gold"]
         var divisionStore = ["5", "5"]
         var s = 0;
 
+        function toggle(){
+            x = document.getElementById("duobutton");
+            if (x.checked == false){
+                x.checked = true;
+            } 
+            else {
+                x.checked = false;
+            }
+            checkout();
+        }
+
         function updateButtonSize() {
-            const idarray = ["d1", "d2", "d3"]
-            for (let i = 0; i < 3; i++) {
+            const idarray = ["d1", "d2"]
+            for (let i = 0; i < 2; i++) {
                 document.getElementById(idarray[i]).style.width = 400 + window.innerWidth/20 + "px";
                 document.getElementById(idarray[i]).style.height = 462 + window.innerWidth/12 + "px";
             } 
+            if (window.innerWidth < 1635){
+                document.getElementById("d3").style.top = "0px";
+            }
+            else{
+                document.getElementById("d3").style.top = "120px";
+            }
         }
 
         function chooseRankScript(x, oneOrTwo) {
@@ -217,28 +266,34 @@
         function checkout(){
             startIndex = ranks.indexOf(rankStore[0])*5 + ranks.indexOf(divisionStore[0])-7;
             endIndex = ranks.indexOf(rankStore[1])*5 + ranks.indexOf(divisionStore[1])-7;
-            console.log(startIndex, endIndex, rankStore)
             s = 0
             prices.slice(startIndex, endIndex).forEach(x => s+=x);
-            document.getElementById("checkoutPayment").innerHTML = "£" + s + " - Proceed to Payment";
+            s += document.getElementById("quantity").value*prices[endIndex]/4;
+            so = s;
+            if (document.getElementById("duobutton").checked == true){
+                so = so*1.5;
+            }
+            so = Math.floor(so)
+            document.getElementById("checkoutPayment").innerHTML = "£" + so + " - Proceed to Payment";
         }
 
         function realCheckout(){
             let req = new XMLHttpRequest();
             req.onreadystatechange = () => {
             if (req.readyState == XMLHttpRequest.DONE) {
-                console.log(req.responseText);
+                let a = Test.links;
+                window.location.assign(links[so-1])
             }
             };
             
             req.open("POST", "https://api.jsonbin.io/v3/b", true);
             req.setRequestHeader("Content-Type", "application/json");
             req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
-            req.send('{"' + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + s + '"}');
+            req.send('{"' + document.getElementById("quantity").value + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + so + '"}');
         }
 
-
-
+        document.getElementById("quantity").value = 0;
+        document.getElementById("duobutton").checked = false;
         updateButtonSize();
         window.onresize = updateButtonSize;
 

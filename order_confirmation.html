@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            color:#d29c4b;
+            background-color: #04131d;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .top{
+            font-size: 60px;
+        }
+
+        .notice{
+            color: #ff3801;
+            font-size:20px;
+        }
+
+        .contactDetails{
+            font-size: 40px;
+            height: 45vh;
+            position: relative;
+            vertical-align: middle;
+        }            
+
+        .item1 { grid-area: header; }
+        .item2 { grid-area: left; }
+        .item3 { grid-area: right; }
+        .item4 { grid-area: bot; }
+        .item5 { grid-area: botright; }
+
+
+        .grid-container {
+            display: grid;
+            grid-template-areas:
+                'header header header'
+                'left right right'
+                'bot botright botright';
+            padding: 10px;
+            left:25%;
+            background-color: #d29c4b;
+        }
+
+        .grid-container > div {
+            background-color: #04131d;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 25px;
+        }
+
+        .maincontainer{
+            width:50%;
+            left: 25%;
+            position: relative;
+        }
+</style>
+
+    </style>
+</head>
+<body>
+    <div class="top">
+        <img src="https://i.imgur.com/r1Ecvpy.png" width="300px" height="300px"><br>
+        <b>Thank you for your purchase!</b>
+    </div>
+    <br>
+    <div class="notice">
+        <b>! Our live chat is under maintenance !</b>
+    </div>
+    <br><br>
+
+    <div class="maincontainer">
+        <div class="grid-container">
+            <div class="item1"><b>Contact Your Booster</b></div>
+            <div class="item2"><img src="https://static.vecteezy.com/system/resources/previews/018/930/718/non_2x/discord-logo-discord-icon-transparent-free-png.png" width="100px" height="100px" ></div>   
+            <div class="item3"><br>deamerd</div>   
+            <div class="item4"><img src="https://1000logos.net/wp-content/uploads/2021/05/Gmail-logo.png" width="200px" height="112px"></div>  
+            <div class="item5"><br>aasikameli97@gmail.com</div>   
+            
+        </div>
+    </div>
+</body>
+</html>
