@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bob's Boosting</title>
     <script type="text/javascript"
         src="paymentlinkScript.js">
     </script>
@@ -151,7 +151,7 @@
         <div id="d1" class="gameButton" >
             <div class="currentrank">
                 <h1 style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Current Rank</b></h1>
-                <div id="rank1" class="selected silver"></div>
+                <div id="rank1" class="selected gold"></div>
                 <div id="rankNumber1" style="font-size: 40px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: #d29c4b;;">5</div>
                 <div onclick="checkout()" class="rankbuttons"> 
                     <button onclick="chooseRankScript(0, 1)" class="button bronze"></button>
@@ -204,7 +204,7 @@
                     <b>Additional wins</b><input type="number" id="quantity" oninput="checkout()" name="quantity" min="0" max="4"> 
                 </div>
 
-                <h2 id="conclusion" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Silver 5 -> Gold 5</b></h2>                
+                <h2 id="conclusion" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Gold 5 -> Gold 5</b></h2>                
                 <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >€0 - Proceed to Payment</button>
             </div>
         </div>
@@ -215,7 +215,7 @@
         // Globals cause fuck it XD
         const ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "5", "4", "3", "2", "1"];
         // ffoawgopak my life but these are the variables that will be used to calculate payment
-        var rankStore= ["Silver", "Gold"]
+        var rankStore= ["Gold", "Gold"]
         var divisionStore = ["5", "5"]
         var s = 0;
 
@@ -262,7 +262,13 @@
         }
 
         // Prices 
-        const prices = [3,3,3,4, 5,5,5,6, 7,7,7,8, 9,9,9,10, 11,11,11,12, 13,15,17,19, 25,30,35,40]
+        const prices = [2.2, 2.4, 2.6, 2.8,  
+                        3, 3.25, 3.5, 3.75, 4,  
+                        4.33, 4.66, 5, 5.33, 5.66,  
+                        6,6.4,6.8,7.2,7.6,
+                        8, 8.5, 9, 9.5, 10,
+                        11, 12, 13, 14, 15,
+                        18, 21, 23, 25, 27, 32]
         function checkout(){
             startIndex = ranks.indexOf(rankStore[0])*5 + ranks.indexOf(divisionStore[0])-7;
             endIndex = ranks.indexOf(rankStore[1])*5 + ranks.indexOf(divisionStore[1])-7;
@@ -273,23 +279,33 @@
             if (document.getElementById("duobutton").checked == true){
                 so = so*1.5;
             }
-            so = Math.floor(so)
+            so = Math.round(so)
             document.getElementById("checkoutPayment").innerHTML = "€" + so + " - Proceed to Payment";
         }
 
         function realCheckout(){
-            let req = new XMLHttpRequest();
-            req.onreadystatechange = () => {
-            if (req.readyState == XMLHttpRequest.DONE) {
-                let a = Test.links;
-                window.location.assign(a[so-1])
+            var v = ""
+            if (document.getElementById("duobutton").checked == true){
+                v = "D"
             }
-            };
-            
-            req.open("POST", "https://api.jsonbin.io/v3/b", true);
-            req.setRequestHeader("Content-Type", "application/json");
-            req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
-            req.send('{"' + document.getElementById("quantity").value + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + so + '"}');
+            else{
+                v = "S"
+            }
+
+            if (so > 0){
+                let req = new XMLHttpRequest();
+                req.onreadystatechange = () => {
+                if (req.readyState == XMLHttpRequest.DONE) {
+                    let a = Test.links;
+                    window.location.assign(a[so-1])
+                }
+                };
+                
+                req.open("POST", "https://api.jsonbin.io/v3/b", true);
+                req.setRequestHeader("Content-Type", "application/json");
+                req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
+                req.send('{"' + document.getElementById("quantity").value + v + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + so + '"}');
+            }
         }
 
         document.getElementById("quantity").value = 0;

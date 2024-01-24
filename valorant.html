@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bob's Boosting</title>
     <script type="text/javascript"
         src="paymentlinkScript.js">
     </script>
@@ -232,8 +232,8 @@
         }
 
         function updateButtonSize() {
-            const idarray = ["d1", "d2", "d3"]
-            for (let i = 0; i < 3; i++) {
+            const idarray = ["d1", "d2"]
+            for (let i = 0; i < 2; i++) {
                 document.getElementById(idarray[i]).style.width = 400 + window.innerWidth/20 + "px";
                 document.getElementById(idarray[i]).style.height = 462 + window.innerWidth/12 + "px";
                 if (window.innerWidth < 1635){
@@ -281,14 +281,24 @@
             }
 
         // Prices 
-        const prices = [3,3,3,4, 5,5,5,6, 7,7,7,8, 9,9,9,10, 11,11,11,12, 13,15,17,19, 25,30,35,40]
+        const prices = [3.2, 3.4, 3.6, 
+                        4.3, 4.6, 4.9, 
+                        5.3, 5.6, 5.9, 
+                        8.4, 8.8, 9.2, 
+                        12, 13, 14, 
+                        19, 20, 21, 
+                        40, 50, 60, 
+                        70]
         function checkout(){
             if (rankStore[0]=="Immortal"){
                 s = Math.ceil(document.getElementById("quantity").value*(15 + document.getElementById("LP").value/40))
             }
             else{
-                startIndex = ranks.indexOf(rankStore[0])*4 + ranks.indexOf(divisionStore[0])-8;
-                endIndex = ranks.indexOf(rankStore[1])*4 + ranks.indexOf(divisionStore[1])-8;
+                startIndex = ranks.indexOf(rankStore[0])*3 + ranks.indexOf(divisionStore[0])-8;
+                endIndex = ranks.indexOf(rankStore[1])*3 + ranks.indexOf(divisionStore[1])-8;
+                if (divisionStore[1] == " "){
+                    endIndex -= 3;
+                }
                 s = 0
                 prices.slice(startIndex, endIndex).forEach(x => s+=x);
                 s += document.getElementById("quantity").value*prices[endIndex]/4
@@ -297,7 +307,8 @@
             if (document.getElementById("duobutton").checked == true){
                 so = so*1.5;
             }
-            so = Math.floor(so);
+            console.log(startIndex, endIndex, prices, so, s)
+            so = Math.round(so);
             document.getElementById("checkoutPayment").innerHTML = "€" + so + " - Proceed to Payment";
         }
 
@@ -310,7 +321,7 @@
                 v = "S"
             }
 
-            if (s > 0){
+            if (so > 0){
                 let req = new XMLHttpRequest();
                 req.onreadystatechange = () => {
                 if (req.readyState == XMLHttpRequest.DONE) {
