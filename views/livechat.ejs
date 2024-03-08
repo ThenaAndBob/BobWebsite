@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        .body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .container {
+            position: absolute;
+            top:0px;
+            left:0px;
+            width:100vw;
+            height: 100vh;
+            background-color: #04131d;
+            color: #d29c4b;
+            display: flex;
+            text-align: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .banner {
+            width: 100vw;
+            color: #04131d;
+            height: 35px;
+            background-color: #d29c4b;
+            font-size: 30px;
+            font-family: Impact,'Arial Narrow Bold', sans-serif;
+            word-spacing: 20px;
+        }
+
+        .boostdetails {
+            width:30%;
+            height:70%;
+            background-color: black;
+            margin: 50px;
+            flex-wrap: nowrap;
+            margin-right: 60px;
+            border: 5px solid #d29c4b;
+            }
+
+        .chat{
+            width:55%;
+            height:70%;
+            background-color: black;
+            margin: 50px;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            border: 5px solid #d29c4b;
+        }
+
+        .scrollmessages {
+            margin-top: 2%;
+            margin-left: 5%;
+            width: 90%;
+            height: 100%;
+            background-color: black;
+            overflow: auto;
+            text-align: justify;
+            font-size: 17px;
+        }
+
+        .form {
+            text-align: center;
+            width: 90%;
+            position: relative;
+            left: 5%;
+        }   
+
+        .form input {
+            width: 94%;
+            padding: 7px;
+            border: 2px solid #d29c4b;
+            border-radius: 5px;
+            margin: 15px 0px;
+            background-color: #04131d;
+            color: white;
+            font-size: 15px;
+        }
+
+        .sender {
+            color: white;
+            font-size: 20px;
+            font-family: sans-serif
+        }
+
+        .content {
+            color: white;
+            font-size: 15px;
+            font-family: sans-serif
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner">
+            I will put some stuff up here at some point <%=username%>
+        </div>
+
+        <div class="boostdetails">
+        </div>
+
+        <div class="chat">
+            <div class="scrollmessages" id="text">
+            </div>
+            <br style="color: #d29c4b;">
+            <form id = "form" class="form" autocomplete="off">
+                <input type="text" id="message">
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module">
+        import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js"
+
+        
+        const form = document.getElementById("form")
+        const message = document.getElementById("message")
+        const text = document.getElementById("text")
+        const socket = io("http://localhost:3000")
+        var val = ""
+        var sender = ""
+        var prevSender = ""
+        var username = '<%-username%>'
+        var password = '<%-password%>'
+        var chat = '<%-chat%>'
+        var enemyname = '<%-enemyname%>' // FIX might be useless
+        var temp = ""
+
+        if (chat.length > 0){
+            chat = chat.slice(0, -1)
+
+            chat.split('¬').forEach((element) => {
+                temp = element.split("|")
+                displayMessage(temp[0], temp[1])
+            })
+        }
+        
+        socket.emit("authenticate", username, password)
+
+        form.addEventListener("submit", arg => {
+            arg.preventDefault()
+            val = message.value
+            if (val == ""){
+                return
+            }
+            displayMessage(val, username)
+            socket.emit('sendMessage', val)
+            form.reset()
+        })
+
+        socket.on("receiveMessage", (content, s) =>{
+            displayMessage(content, s)
+        })
+
+        function displayMessage(msg, sender){
+            if (prevSender != sender){
+                text.innerHTML += `<div class='sender'><b>${sender}</b><br></div>`
+            }
+            text.innerHTML += `<div class='content'>${msg}<br></div>`
+            text.scrollBy(0, 100)   
+            prevSender = sender 
+        }
+
+    </script>
+</body>
+
+</html>
