@@ -127,7 +127,7 @@
         const form = document.getElementById("form")
         const message = document.getElementById("message")
         const text = document.getElementById("text")
-        const socket = io("https://bobsboosting.com:3000")
+        const socket = io.connect("https://bobsboosting.com")
         var val = ""
         var sender = ""
         var prevSender = ""
