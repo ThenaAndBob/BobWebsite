@@ -10,10 +10,11 @@ var mysql      = require('mysql2');
 var fs = require("fs");
 const io = require("socket.io")(3000, {
     cors: {
-        origin: ["http://localhost:8080"],
+        origin: ["http://localhost:8080", "http://localhost:3000", "https://bobsboosting.com"],
     }
 })
 app.set('view engine', 'ejs');
+var cors = require('cors')
 
 // required variables
 var bodyParser = require('body-parser');
@@ -29,7 +30,11 @@ var connection = mysql.createConnection({
 });
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8080 } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
-
+var corsOptions = {
+  origin: 'https://bobsboosting.com',
+  optionSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 
 // middleware
 app.use(bodyParser.urlencoded({
