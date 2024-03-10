@@ -11,11 +11,7 @@ var connection = mysql.createConnection({
   }
 });
 
-connection.query(`CREATE TABLE "users" (
-	"username"	VARCHAR(255) NOT NULL,
-	"password"	VARCHAR(255) NOT NULL,
-	PRIMARY KEY("username")
-)`, function (error, results, fields) {
+connection.query(`SELECT * FROM chatconnection`, function (error, results, fields) {
   if (error) throw error;
-  console.log("bob")
+  console.log(results, fields)
 });

@@ -6,11 +6,10 @@ var express = require('express')
 var app = express()
 app.use(express.json())
 const { createHash } = require('crypto');
-var mysql      = require('mysql2');
-var fs = require("fs");
+const sqlite3 = require('sqlite3').verbose();
 const io = require("socket.io")(app.listen(8080), {
     cors: {
-        origin: ["http://localhost:8080", "https://bobsboosting.com"],
+      origin: ["http://localhost:8080", "https://bobsboosting.com"],
     }
 })
 app.set('view engine', 'ejs');
@@ -18,16 +17,7 @@ var cors = require('cors')
 
 // required variables
 var bodyParser = require('body-parser');
-var connection = mysql.createConnection({
-  host     : 'db-mysql-fra1-01799-do-user-15753853-0.c.db.ondigitalocean.com',
-  user     : 'doadmin',
-  password : 'AVNS_DrO2TOGPa_kcrste5Sz',
-  port: 25060,
-  database: 'defaultdb',
-  ssl: {
-    ca: fs.readFileSync(__dirname + "/ca-certificate.crt")
-  }
-});
+const db = new sqlite3.Database('test.db'); // This constant opening and closing might be bad FIX. IF this is slow figure out a better way ig.
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8080 } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 var corsOptions = {
@@ -53,39 +43,41 @@ function hash(string) {
 }
 
 var authenticate = function(username, password, type, callback, extraparams=[]){
-    console.log("Started authenticate", type)
+    console.log("Started authenticate")
     if (username == "" || password == ""){
         callback("Username or password is empty", extraparams, type) // FIX ui
         return
     } 
     password = hash(password)
 
-    if (type == "Sign up"){
-        connection.query("SELECT username FROM users WHERE username = '" + username + "'", (err, data) =>{
-            if (data.length == 1){
-                // Username already exists
-                callback("Username already exists", extraparams, type)
-            } else {
-                connection.query("INSERT INTO users VALUES ('" + username + "', '" + password + "');", () =>{
-                    callback("in", extraparams)
-                })
-            }
-        })
-    }
-    else if (type == "Log in"){
-        connection.query("SELECT password FROM users WHERE username = '" + username + "'", (err, data) =>{
-            if (data.length == 0){
-                callback("Username does not exist", extraparams, type) // FIX UI
-            } else {
-                if (password == data[0]["password"]){
-                    callback("in", extraparams)
+    db.serialize(() => {
+        if (type == "Sign up"){
+            db.all("SELECT username FROM users WHERE username = '" + username + "'", (err, data) =>{
+                if (data.length == 1){
+                    // Username already exists
+                    callback("Username already exists", extraparams, type)
                 } else {
-                    // FIX UI
-                    callback("Wrong password", extraparams, type)
+                    db.run("INSERT INTO users VALUES ('" + username + "', '" + password + "');", () =>{
+                        callback("in", extraparams)
+                    })
                 }
-            }
-        })
-    }
+            })
+        }
+        else if (type == "Log in"){
+            db.all("SELECT password FROM users WHERE username = '" + username + "'", (err, data) =>{
+                if (data.length == 0){
+                    callback("Username does not exist", extraparams, type) // FIX UI
+                } else {
+                    if (password == data[0]["password"]){
+                        callback("in", extraparams)
+                    } else {
+                        // FIX UI
+                        callback("Wrong password", extraparams, type)
+                    }
+                }
+            })
+        }
+    });    
 }
 
 function signedIn(result, extraparams, type){
@@ -102,20 +94,22 @@ function signedIn(result, extraparams, type){
         username = extraparams[0].body.username
         var chat = ""
         var details = ""
-        connection.query(`SELECT chatID, boostername FROM chatconnection WHERE username = '${username}';`, (err, all) =>{
-            console.log("all = " + all)   
-            if (all.length == 0){
-                setupchatconnection(username, extraparams)
-                return
-            }
-            row = all[0]
-            details += row.boostername 
-            connection.query(`SELECT content, sender FROM messages WHERE chatID = '${row.chatID}' ORDER BY messageID ASC;`, (err, data) =>{ // FIX currently would not work for more than one chat per username (/account)
-                data.forEach((crow) =>{
-                    chat += `${crow.content}|${crow.sender}¬` // IMPORTANT FIX THIS MEANS YOU ARE NOT ALLOWED TO HAVE "|" or "¬" IN ANY TEXT THAT APPEARS IN THE DATABASE, SO LIVE CHAT OR USERNAME
+        db.serialize(() =>{
+            db.all(`SELECT chatID, boostername FROM chatconnection WHERE username = '${username}';`, (err, all) =>{
+                console.log("all = " + all)   
+                if (all.length == 0){
+                    setupchatconnection(username, extraparams)
+                    return
+                }
+                row = all[0]
+                details += row.boostername 
+                db.all(`SELECT content, sender FROM messages WHERE chatID = '${row.chatID}' ORDER BY messageID ASC;`, (err, data) =>{ // FIX currently would not work for more than one chat per username (/account)
+                    data.forEach((crow) =>{
+                        chat += `${crow.content}|${crow.sender}¬` // IMPORTANT FIX THIS MEANS YOU ARE NOT ALLOWED TO HAVE "|" or "¬" IN ANY TEXT THAT APPEARS IN THE DATABASE, SO LIVE CHAT OR USERNAME
+                    })
+                    console.log(chat)
+                    livechat(chat, details, extraparams)
                 })
-                console.log(chat)
-                livechat(chat, details, extraparams)
             })
         })
     }
@@ -139,7 +133,7 @@ function socketauth(code, extraparams){
 }
 
 function socketjoinchat(socket, username){
-    connection.query(`SELECT chatID FROM chatconnection WHERE username = '${username}'`, (err, chatID) =>{
+    db.all(`SELECT chatID FROM chatconnection WHERE username = '${username}'`, (err, chatID) =>{
         socket.chatID = chatID[0].chatID
         socket.join(chatID)
     })
@@ -147,7 +141,7 @@ function socketjoinchat(socket, username){
 
 function updatemessages(content, sender, chatID){
     console.log(content, sender, chatID)
-    connection.query(`INSERT INTO messages (content, sender, chatID) VALUES ('${content}', '${sender}', '${chatID}')`)
+    db.run(`INSERT INTO messages (content, sender, chatID) VALUES ('${content}', '${sender}', '${chatID}')`)
 }
 
 function getRandomInt(max) { // fix for development
@@ -156,7 +150,7 @@ function getRandomInt(max) { // fix for development
   
 function setupchatconnection(username, extraparams, booster=""){
     booster = "deamerd" + getRandomInt(10000000).toString()
-    connection.query(`INSERT INTO chatconnection (username, boostername) VALUES ('${username}', '${booster}')`)
+    db.run(`INSERT INTO chatconnection (username, boostername) VALUES ('${username}', '${booster}')`)
     livechat("", booster, extraparams)
 }
 
@@ -354,6 +348,10 @@ app.post('/signup', function(req, res){
 })
 
 
+app.listen(PORT, () =>{
+    console.log("listening on port " + PORT)
+})
+
 
 // Live chat shit
 io.on("connection", socket => {
@@ -372,4 +370,3 @@ io.on("connection", socket => {
         }
     })
 })
-
