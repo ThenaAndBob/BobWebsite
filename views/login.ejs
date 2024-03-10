@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .form {
+            text-align: center;
+            width: 90%;
+            position: relative;
+            left: 5%;
+        }   
+
+        .form input {
+            width: 94%;
+            padding: 7px;
+            border: 2px solid #d29c4b;
+            border-radius: 5px;
+            margin: 15px 0px;
+            background-color: #04131d;
+            color: white;
+            font-size: 15px;
+        }
+
+        .banner {
+            width: 100vw;
+            color: #04131d;
+            height: 35px;
+            background-color: #d29c4b;
+            font-size: 30px;
+            font-family: Impact,'Arial Narrow Bold', sans-serif;
+            word-spacing: 20px;
+        }
+
+        .container {
+            position: absolute;
+            top:0px;
+            left:0px;
+            width:100vw;
+            height: 100vh;
+            background-color: #04131d;
+            color: #d29c4b;
+            display: flex;
+            text-align: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .formcontainer {
+            border: 5px solid #d29c4b;
+            top: 30%;
+            position: absolute;
+        }
+
+        .title{
+            font-size: 30px;
+            margin: 15px;
+            font-family: Impact, 'Arial Narrow Bold', sans-serif;
+        }
+
+        .bob{
+            background-color: #0f496f;
+            border: 3px solid #d29c4b;
+            border-radius: 5px; 
+            color: black;
+            padding: 16px 32px;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 10px;
+            font-family: sans-serif;
+            font-size: 17px;
+        }
+
+        .changelink{
+            color: white;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="banner">
+            I will put some stuff up here at some point 
+        </div>
+
+        <div class="formcontainer">
+            <div class="logo"></div>
+            <div class="title"><%=formtype%></div>
+            <a href="./signup" class="changelink" id="changelink">test</a>
+            <form class="form" action="/login" method="post" name="regForm" autocomplete="off">              
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" id="username">
+                    <input type="text" name="password" class="form-control" id="password">
+                </div>
+                <div id="formerror"></div>
+                <button class="bob" type="submit"><%=formtype%></button>
+            </form>   
+        </div> 
+    </div>
+
+    <script>
+        var problem = '<%-problem%>'
+        var formtype = '<%-formtype%>'
+        var changelink = document.getElementById("changelink")
+        console.log(formtype)
+        if (problem != ""){
+            formerror = document.getElementById("formerror").innerHTML = problem
+        }
+        if (formtype == "Log in"){
+            changelink.innerHTML = "Don't have an account? Sign up"
+        } else if (formtype == "Sign up"){
+            console.log("sign")
+            changelink.innerHTML = "Already have an account? Log in"
+        }
+    </script>
+</body>
+
+</html>

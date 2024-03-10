@@ -206,20 +206,26 @@
                 </div>
 
                 <h2 id="conclusion" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Iron 1 -> Iron 1</b></h2>                
-                <button onclick="realCheckout()" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >€0 - Proceed to Payment</button>
+                <div id="paypal-button-container"></div>
+                <p id="result-message"></p>
             </div>
         </div>
 
     </div>
 
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AZdXAHlKKx-UUXIbN6ptjQ1j30XoTH6L6OXbocnb2y0_ewKsyDk5ggERcUY1WbkTZXusaOHYlcLPp4C6&currency=USD&disable-funding=credit,card"></script>
     <script>
         // Globals cause fuck it XD
+        
         const ranks = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Ascendant", "Immortal", "1", "2", "3", " "];
         
         // ffoawgopak my life but these are the variables that will be used to calculate payment
         var rankStore= ["Iron", "Iron"]
         var divisionStore = ["1", "1"]
         var s = 0;
+        var so = 0;
+
 
         function toggle(){
             x = document.getElementById("duobutton");
@@ -355,6 +361,99 @@
         document.getElementById("duobutton").checked = false;
         updateButtonSize();
         window.onresize = updateButtonSize;
+
+
+
+        window.paypal
+        .Buttons({
+            async createOrder() {
+            try {
+                const response = await fetch("/api/orders", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                // use the "body" param to optionally pass additional order information
+                // like product ids and quantities
+                body: JSON.stringify({
+                    cart: [
+                    {
+                        id: "YOUR_PRODUCT_ID",
+                        quantity: 1,
+                        price: so,
+                    },
+                    ],
+                }),
+                });
+                
+                const orderData = await response.json();
+                
+                if (orderData.id) {
+                return orderData.id;
+                } else {
+                const errorDetail = orderData?.details?.[0];
+                const errorMessage = errorDetail
+                    ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                    : JSON.stringify(orderData);
+                
+                throw new Error(errorMessage);
+                }
+            } catch (error) {
+                console.error(error);
+                resultMessage(`Could not initiate PayPal Checkout...<br><br>${error}`);
+            }
+            },
+            async onApprove(data, actions) {
+            try {
+                const response = await fetch(`/api/orders/${data.orderID}/capture`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                });
+                
+                const orderData = await response.json();
+                // Three cases to handle:
+                //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                //   (2) Other non-recoverable errors -> Show a failure message
+                //   (3) Successful transaction -> Show confirmation or thank you message
+                
+                const errorDetail = orderData?.details?.[0];
+                
+                if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+                // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+                return actions.restart();
+                } else if (errorDetail) {
+                // (2) Other non-recoverable errors -> Show a failure message
+                throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
+                } else if (!orderData.purchase_units) {
+                throw new Error(JSON.stringify(orderData));
+                } else {
+                // (3) Successful transaction -> Show confirmation or thank you message
+                // Or go to another URL:  actions.redirect('thank_you.html');
+                const transaction =
+                    orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
+                    orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
+                resultMessage(
+                    `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`,
+                );
+                console.log(
+                    "Capture result",
+                    orderData,
+                    JSON.stringify(orderData, null, 2),
+                );
+                }
+            } catch (error) {
+                console.error(error);
+                resultMessage(
+                `Sorry, your transaction could not be processed...<br><br>${error}`,
+                );
+            }
+            },
+        })
+        .render("#paypal-button-container");
+
 
     </script>
     
