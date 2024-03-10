@@ -348,11 +348,6 @@ app.post('/signup', function(req, res){
 })
 
 
-app.listen(PORT, () =>{
-    console.log("listening on port " + PORT)
-})
-
-
 // Live chat shit
 io.on("connection", socket => {
     console.log(socket.id)
