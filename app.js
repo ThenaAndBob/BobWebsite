@@ -8,9 +8,9 @@ app.use(express.json())
 const { createHash } = require('crypto');
 var mysql      = require('mysql2');
 var fs = require("fs");
-const io = require("socket.io")(3000, {
+const io = require("socket.io")(app.listen(8080), {
     cors: {
-        origin: ["http://localhost:8080", "http://localhost:3000", "https://bobsboosting.com"],
+        origin: ["http://localhost:8080", "https://bobsboosting.com"],
     }
 })
 app.set('view engine', 'ejs');
@@ -353,10 +353,6 @@ app.post('/signup', function(req, res){
     authenticate(req.body.username, req.body.password, "Sign up", signedIn, [req, res])
 })
 
-
-app.listen(PORT, () =>{
-    console.log("listening on port " + PORT)
-})
 
 
 // Live chat shit
