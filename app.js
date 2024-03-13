@@ -42,7 +42,7 @@ function hash(string) {
     return createHash('sha256').update(string).digest('hex');
 }
 
-var authenticate = function(username, password, type, callback, extraparams=[]){
+function authenticate(username, password, type, callback, usertype, extraparams=[]){
     console.log("Started authenticate")
     if (username == "" || password == ""){
         callback("Username or password is empty", extraparams, type) // FIX ui
@@ -64,12 +64,20 @@ var authenticate = function(username, password, type, callback, extraparams=[]){
             })
         }
         else if (type == "Log in"){
-            db.all("SELECT password FROM users WHERE username = '" + username + "'", (err, data) =>{
+			if (usertype == "username"){
+				table = "users"
+			} else {
+				table = "boosters"
+			}
+            db.all(`SELECT password FROM ${table} WHERE ${usertype} = '` + username + "'", (err, data) =>{
+				console.log(`SELECT password FROM ${table} WHERE ${usertype} = '` + username + "'")
+				console.log(err)
+				console.log(data)
                 if (data.length == 0){
                     callback("Username does not exist", extraparams, type) // FIX UI
                 } else {
                     if (password == data[0]["password"]){
-                        callback("in", extraparams)
+                        callback("in", extraparams, type, usertype)
                     } else {
                         // FIX UI
                         callback("Wrong password", extraparams, type)
@@ -80,22 +88,22 @@ var authenticate = function(username, password, type, callback, extraparams=[]){
     });    
 }
 
-function signedIn(result, extraparams, type){
+function getchatlogs(result, extraparams, formtype, usertype="username"){
     console.log(`result =  ${result}`)
-    if (result != "in"){
-        console.log(type)
+    if (result != "in"){ // check if login was a succes
+        console.log(formtype)
         res = extraparams[1]
         res.render("login.ejs", {
             problem: result,
-            formtype: type
+            formtype: formtype
         })
         res.end()
-    } else {
+    } else { // Getting chat logs
         username = extraparams[0].body.username
         var chat = ""
         var details = ""
         db.serialize(() =>{
-            db.all(`SELECT chatID, boostername FROM chatconnection WHERE username = '${username}';`, (err, all) =>{
+            db.all(`SELECT chatID, boostername FROM chatconnection WHERE ${usertype} = '${username}';`, (err, all) =>{
                 console.log("all = " + all)   
                 if (all.length == 0){
                     setupchatconnection(username, extraparams)
@@ -108,21 +116,22 @@ function signedIn(result, extraparams, type){
                         chat += `${crow.content}|${crow.sender}¬` // IMPORTANT FIX THIS MEANS YOU ARE NOT ALLOWED TO HAVE "|" or "¬" IN ANY TEXT THAT APPEARS IN THE DATABASE, SO LIVE CHAT OR USERNAME
                     })
                     console.log(chat)
-                    livechat(chat, details, extraparams)
+                    livechat(chat, details, extraparams, usertype)
                 })
             })
         })
     }
 }
 
-function livechat(chat, enemyname, extraparams){
+function livechat(chat, enemyname, extraparams, usertype){
     req = extraparams[0]
     res = extraparams[1]
     res.render("livechat.ejs", {
         username: req.body.username,
         password: req.body.password,
         chat: chat,
-        enemyname: enemyname
+        enemyname: enemyname,
+		usertype: usertype,
     })
 }
 
@@ -132,10 +141,13 @@ function socketauth(code, extraparams){
     }
 }
 
-function socketjoinchat(socket, username){
-    db.all(`SELECT chatID FROM chatconnection WHERE username = '${username}'`, (err, chatID) =>{
+function socketjoinchat(socket, username, usertype="username"){
+	console.log("Starter socketjoinchat")
+	console.log(`SELECT chatID FROM chatconnection WHERE ${usertype} = '${username}'`)
+    db.all(`SELECT chatID FROM chatconnection WHERE ${usertype} = '${username}'`, (err, chatID) =>{
         socket.chatID = chatID[0].chatID
-        socket.join(chatID)
+		console.log(`joining chat ${socket.chatID}`)
+        socket.join(socket.chatID)
     })
 }
 
@@ -143,17 +155,11 @@ function updatemessages(content, sender, chatID){
     console.log(content, sender, chatID)
     db.run(`INSERT INTO messages (content, sender, chatID) VALUES ('${content}', '${sender}', '${chatID}')`)
 }
-
-function getRandomInt(max) { // fix for development
-    return Math.floor(Math.random() * max);
-  }
   
-function setupchatconnection(username, extraparams, booster=""){
-    booster = "deamerd" + getRandomInt(10000000).toString()
-    db.run(`INSERT INTO chatconnection (username, boostername) VALUES ('${username}', '${booster}')`)
-    livechat("", booster, extraparams)
+function setupchatconnection(username, extraparams, usertype="username"){
+    db.run(`INSERT INTO chatconnection (username) VALUES ('${username}')`)
+    livechat("", "", extraparams, usertype)
 }
-
 
  
 /**
@@ -161,105 +167,105 @@ function setupchatconnection(username, extraparams, booster=""){
 * @see https://developer.paypal.com/api/rest/authentication/
 */
 const generateAccessToken = async () => {
-    try {
-      if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
-        throw new Error("MISSING_API_CREDENTIALS");
-      }
-      const auth = Buffer.from(
-        PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET,
-      ).toString("base64");
-      const response = await fetch(`${base}/v1/oauth2/token`, {
-        method: "POST",
-        body: "grant_type=client_credentials",
-        headers: {
-          Authorization: `Basic ${auth}`,
-        },
-      });
-      
-      const data = await response.json();
-      return data.access_token;
-    } catch (error) {
-      console.error("Failed to generate Access Token:", error);
-    }
-  };
+	try {
+		if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
+		throw new Error("MISSING_API_CREDENTIALS");
+		}
+		const auth = Buffer.from(
+		PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET,
+		).toString("base64");
+		const response = await fetch(`${base}/v1/oauth2/token`, {
+		method: "POST",
+		body: "grant_type=client_credentials",
+		headers: {
+			Authorization: `Basic ${auth}`,
+		},
+		});
+		
+		const data = await response.json();
+		return data.access_token;
+	} catch (error) {
+		console.error("Failed to generate Access Token:", error);
+	}
+};
     
   /**
   * Create an order to start the transaction.
   * @see https://developer.paypal.com/docs/api/orders/v2/#orders_create
   */
-  const createOrder = async (cart) => {
-    // use the cart information passed from the front-end to calculate the purchase unit details
-    console.log(
-      "shopping cart information passed from the frontend createOrder() callback:",
-      cart,
-    );
-    const accessToken = await generateAccessToken();
-    const url = `${base}/v2/checkout/orders`;
-    const payload = {
-      intent: "CAPTURE",
-      purchase_units: [
-        {
-          amount: {
-            currency_code: "USD",
-            value: cart[0].price,
-          },
-        },
-      ],
-    };
-    
-    const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-        // Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
-        // https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
-        // "PayPal-Mock-Response": '{"mock_application_codes": "MISSING_REQUIRED_PARAMETER"}'
-        // "PayPal-Mock-Response": '{"mock_application_codes": "PERMISSION_DENIED"}'
-        // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
-      },
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
-    
-    return handleResponse(response);
-  };
+const createOrder = async (cart) => {
+	// use the cart information passed from the front-end to calculate the purchase unit details
+	console.log(
+		"shopping cart information passed from the frontend createOrder() callback:",
+		cart,
+	);
+	const accessToken = await generateAccessToken();
+	const url = `${base}/v2/checkout/orders`;
+	const payload = {
+		intent: "CAPTURE",
+		purchase_units: [
+		{
+			amount: {
+			currency_code: "USD",
+			value: cart[0].price,
+			},
+		},
+		],
+};
+
+const response = await fetch(url, {
+	headers: {
+	"Content-Type": "application/json",
+	Authorization: `Bearer ${accessToken}`,
+	// Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
+	// https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
+	// "PayPal-Mock-Response": '{"mock_application_codes": "MISSING_REQUIRED_PARAMETER"}'
+	// "PayPal-Mock-Response": '{"mock_application_codes": "PERMISSION_DENIED"}'
+	// "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+	},
+	method: "POST",
+	body: JSON.stringify(payload),
+});
+
+return handleResponse(response);
+};
     
   /**
   * Capture payment for the created order to complete the transaction.
   * @see https://developer.paypal.com/docs/api/orders/v2/#orders_capture
   */
-  const captureOrder = async (orderID) => {
-    const accessToken = await generateAccessToken();
-    const url = `${base}/v2/checkout/orders/${orderID}/capture`;
+const captureOrder = async (orderID) => {
+	const accessToken = await generateAccessToken();
+	const url = `${base}/v2/checkout/orders/${orderID}/capture`;
+
+	const response = await fetch(url, {
+		method: "POST",
+		headers: {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${accessToken}`,
+		// Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
+		// https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
+		// "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
+		// "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
+		// "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+		},
+});
+
+return handleResponse(response);
+};
     
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-        // Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
-        // https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
-        // "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
-        // "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
-        // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
-      },
-    });
-    
-    return handleResponse(response);
-  };
-    
-  async function handleResponse(response) {
-    try {
-      const jsonResponse = await response.json();
-      return {
-        jsonResponse,
-        httpStatusCode: response.status,
-      };
-    } catch (err) {
-      const errorMessage = await response.text();
-      throw new Error(errorMessage);
-    }
-  }
+async function handleResponse(response) {
+	try {
+		const jsonResponse = await response.json();
+		return {
+		jsonResponse,
+		httpStatusCode: response.status,
+		};
+	} catch (err) {
+		const errorMessage = await response.text();
+		throw new Error(errorMessage);
+	}
+}
     
   
   
@@ -268,8 +274,7 @@ const generateAccessToken = async () => {
   
   
   
-  
-  app.post("/api/orders", async (req, res) => {
+app.post("/api/orders", async (req, res) => {
     try {
       // use the cart information passed from the front-end to calculate the order amount detals
       const { cart } = req.body;
@@ -281,7 +286,7 @@ const generateAccessToken = async () => {
     }
   });
     
-  app.post("/api/orders/:orderID/capture", async (req, res) => {
+app.post("/api/orders/:orderID/capture", async (req, res) => {
     try {
       const { orderID } = req.params;
       const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
@@ -290,12 +295,12 @@ const generateAccessToken = async () => {
       console.error("Failed to create order:", error);
       res.status(500).json({ error: "Failed to capture order." });
     }
-  });
+});
     
-  // serve index.html
-  app.get("/paypal", (req, res) => {
+  // serve paypal
+app.get("/paypal", (req, res) => {
     res.sendFile(path.resolve("./client/checkout.html"));
-  });
+});
 
 
 
@@ -330,30 +335,35 @@ app.get('/signup', (req, res) =>{
     })
 })
 
-app.get('/livechat', (req, res) =>{
-    res.render("livechat.ejs", {
-    }) // DEVELOPMENT ONLY FIX by removing i think
-})
-
 app.post('/login', function(req,res){
     // Check if the username exists -> IF no return error, ELSE check if password hashes match, if no return error ELSE send to "livechats" page.
 
     // Needs a captcha of some sort FIX
-    authenticate(req.body.username, req.body.password, "Log in", signedIn, [req, res]) // FIX
+    authenticate(req.body.username, req.body.password, "Log in", getchatlogs, "username", [req, res]) // FIX
 });
 
 app.post('/signup', function(req, res){
     // Check if username exists -> IF yes return error, ELSE create new user in database and send to "livechats" page
-    authenticate(req.body.username, req.body.password, "Sign up", signedIn, [req, res])
+    authenticate(req.body.username, req.body.password, "Sign up", getchatlogs, "username", [req, res])
+})
+
+
+// Booster Logins
+app.post("/boosterlogin", (req, res) =>{
+	authenticate(req.body.username, req.body.password, "Log in", getchatlogs, "boostername", [req, res])
+})
+
+app.get("/boosterportal", (req, res) =>{
+	res.sendFile('/boosterlogin.html', {root: __dirname})
 })
 
 
 // Live chat shit
 io.on("connection", socket => {
     console.log(socket.id)
-    socket.on("authenticate", (username, password) =>{
-        authenticate(username, password, "Log in", socketauth, [username, socket])
-        socketjoinchat(socket, username)
+    socket.on("authenticate", (username, password, usertype) =>{
+        authenticate(username, password, "Log in", socketauth, "username", [username, socket])
+        socketjoinchat(socket, username, usertype)
     })
     socket.on("sendMessage", (content) =>{
         if (socket.username != undefined){

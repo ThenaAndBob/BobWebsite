@@ -127,12 +127,13 @@
         const form = document.getElementById("form")
         const message = document.getElementById("message")
         const text = document.getElementById("text")
-        const socket = io.connect("https://bobsboosting.com")
+        const socket = io.connect("http://localhost:8080") // Change this to "https://bobsboosting.com"
         var val = ""
         var sender = ""
         var prevSender = ""
         var username = '<%-username%>'
         var password = '<%-password%>'
+        var usertype = '<%-usertype%>'
         var chat = '<%-chat%>'
         var enemyname = '<%-enemyname%>' // FIX might be useless
         var temp = ""
@@ -146,7 +147,7 @@
             })
         }
         
-        socket.emit("authenticate", username, password)
+        socket.emit("authenticate", username, password, usertype)
 
         form.addEventListener("submit", arg => {
             arg.preventDefault()
