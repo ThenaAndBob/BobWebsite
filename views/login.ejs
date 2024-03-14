@@ -52,6 +52,10 @@
             border: 5px solid #d29c4b;
             top: 30%;
             position: absolute;
+            width: 25%;
+            min-width: 400px;
+            min-height: 358px;
+            height: 30%
         }
 
         .title{
@@ -77,6 +81,10 @@
             color: white;
         }
 
+        .info{
+            color: white;
+        }
+
 
     </style>
 </head>
@@ -91,14 +99,14 @@
         <div class="formcontainer">
             <div class="logo"></div>
             <div class="title"><%=formtype%></div>
-            <a href="../signup" class="changelink" id="changelink">test</a>
+            <div class="info" id="info"></div>
             <form class="form" action="/login" method="post" name="regForm" autocomplete="off" id="form">              
                 <div class="form-group">
                     <input type="text" name="username" class="form-control" id="username">
                     <input type="text" name="password" class="form-control" id="password">
                 </div>
                 <div id="formerror"></div>
-                <button class="bob" type="submit"><%=formtype%></button>
+                <button class="bob" type="submit" id="submitbutton"><%=formtype%></button>
             </form>   
         </div> 
     </div>
@@ -113,13 +121,10 @@
         if (problem != ""){
             formerror = document.getElementById("formerror").innerHTML = problem
         }
-        if (formtype == "Log in"){
-            changelink.innerHTML = "Don't have an account? Sign up"
-        } else if (formtype == "Sign up"){
-            console.log("sign")
-            changelink.innerHTML = "Already have an account? Log in"
-            changelink.href = "../login"
+        if (formtype == "Sign up"){
             document.getElementById("form").action = `/signup/${orderID}`
+            document.getElementById("submitbutton").innerHTML = formtype + " and proceed to checkout."
+            document.getElementById("info").innerHTML = "Create an account to access your dashboard upon payment <br> OR skip and proceed to checkout to use Discord chat instead <br><br>"
         }
     </script>
 </body>

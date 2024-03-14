@@ -3,19 +3,111 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayPal JS SDK Standard Integration</title>
+    <title>Document</title>
 
+    <style>
+        .banner {
+            width: 100vw;
+            color: #04131d;
+            height: 35px;
+            background-color: #d29c4b;
+            font-size: 30px;
+            font-family: Impact,'Arial Narrow Bold', sans-serif;
+            word-spacing: 20px;
+        }
+
+        .container {
+            position: absolute;
+            top:0px;
+            left:0px;
+            width:100vw;
+            height: 100vh;
+            background-color: #04131d;
+            color: #d29c4b;
+            display: flex;
+            text-align: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .paymentcontainer {
+            height: 50%;
+            width: 30%;
+            border: 5px solid #d29c4b;
+            top: 30%;
+            position: absolute;
+        }
+
+        .title{
+            font-size: 30px;
+            margin: 15px;
+            font-family: Impact, 'Arial Narrow Bold', sans-serif;
+        }
+
+        .changelink{
+            color: white;
+        }
+
+        .logo {
+            top: 30px;
+            width:100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .price{
+          font-size: 25px;
+          font-family: sans-serif;
+          padding: 10px;
+        }
+
+        .paypalbutton{
+          width: 90%;
+          left: 5%;
+          position: relative;
+        }
+
+      </style>
   </head>
   <body>
-    <div id="paypal-button-container"></div>
-    <p id="result-message"></p>
-    <!-- Replace the "test" client-id value with your client-id -->
+    <div class="container">
+      <div class="banner">
+          I will put some stuff up here at some point 
+      </div>
+
+      <div class="paymentcontainer">
+          <img class="logo" src="https://i.imgur.com/r1Ecvpy.png">
+          <br><br>
+          <div class="title">Checkout</div>
+          <br><br><br><br><br><br><br><br>
+
+          <div class="price" id="bprice"><b>€138.32 remove</b></div>
+          <div class="boost"></div>
+
+          <div id="paypal-button-container" class="paypalbutton"></div>
+          <p id="result-message"></p>
+          Or join our <a href="https://discord.gg/uvJRspbxuB">discord</a> for discounts and other payment methods.
+      </div> 
+    </div>
+
+
     <script>
       const oid = '<%-oid%>'
       const username = '<%-username%>'
       const password = '<%-password%>'
+      fetch('../getprice', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          oid: oid,
+        }),
+      }).then(res => res.json()).then(j => document.getElementById("bprice").innerHTML = j)
+    
+
     </script>
-    <script src="https://www.paypal.com/sdk/js?client-id=AU08GfUiZwjQbGs0NjchADq6p9L8TmgedfnMg_ZlN2VxpbpUAtN0veETRsWNs6BK_ka2-hLm-mMRb8bi&currency=EUR"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AU08GfUiZwjQbGs0NjchADq6p9L8TmgedfnMg_ZlN2VxpbpUAtN0veETRsWNs6BK_ka2-hLm-mMRb8bi&currency=EUR&disable-funding=credit,card"></script>
     <script src="../client/paypal.js"></script>
   </body>
 </html>

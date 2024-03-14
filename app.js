@@ -340,10 +340,6 @@ function calculatePrice(body){
     return price  
 }
   
-function getRandomInt(max) { 
-    return Math.floor(Math.random() * max);
-}
-
 function insertusername(result, extraparams){
     console.log("started insertusername")
     req = extraparams[0]
@@ -365,7 +361,7 @@ function insertusername(result, extraparams){
                 console.log(data)
                 if (!data[0].username){
                     db.run(`UPDATE orders SET username = '${req.body.username}' WHERE orderID = '${req.params.oid}'`, ()=>{
-                        getpayment(req, res)
+                        setupchatconnection(req.body.username, extraparams)
                     })
                 } else {
                     console.log("haxor? in insertusername")
@@ -375,50 +371,38 @@ function insertusername(result, extraparams){
     }
 }
 
-function getpayment(req, res){
-    res.render("checkout.ejs", {
-        oid: req.params.oid,
-        username: req.body.username,
-        password: req.body.password,
-    })
-}
-
-app.post("/checkout", async (req, res) =>{
-    orderID = getRandomInt(100000000)
-    d = req.body
-    sql = `INSERT INTO orders (orderID, game, start, end, duo, addwins, currprogress) VALUES ('${orderID}', '${d.game}', '${d.start}', '${d.end}', '${d.duo}', '${d.addwins}', '${d.currprogress}')`
+function insertboost(d, orderID){
+    sql = `INSERT INTO orders (orderID, paid, game, start, end, duo, addwins, currprogress) VALUES ('${orderID}', 1, '${d.game}', '${d.start}', '${d.end}', '${d.duo}', '${d.addwins}', '${d.currprogress}')`
     console.log(sql)
     db.run(sql) // Maybe add role and character
-    res.status(200).json(orderID)
-})
+}
+
   
 app.post("/api/orders", async (req, res) => {
     try {
-      // use the cart information passed from the front-end to calculate the order amount detals
-      console.log("in /api/orders")
-      const { cart } = req.body;
-      sql = `SELECT * FROM orders WHERE orderID = '${cart[0].oid}'`
-      console.log(sql)
-      db.all(sql, async (err, data)=>{
-        price = calculatePrice(data[0])
+        // use the cart information passed from the front-end to calculate the order amount detals
+        console.log("in /api/orders")
+        const { cart } = req.body;
+        price = calculatePrice(cart[0])
         const { jsonResponse, httpStatusCode } = await createOrder(cart, price);
+        insertboost(cart[0], jsonResponse.id)
         res.status(httpStatusCode).json(jsonResponse);
-      })
     } catch (error) {
-      console.error("Failed to create order:", error);
-      res.status(500).json({ error: "Failed to create order." });
+        console.error("Failed to create order:", error);
+        res.status(500).json({ error: "Failed to create order." });
     }
   });
     
 app.post("/api/orders/:orderID/capture", async (req, res) => {
     console.log("api capture")
     try {
-      const { orderID } = req.params;
-      const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
-      res.status(httpStatusCode).json(jsonResponse);
+        const { orderID } = req.params;
+        const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
+        console.log(req.body)
+        res.status(httpStatusCode).json(jsonResponse);
     } catch (error) {
-      console.error("Failed to create order:", error);
-      res.status(500).json({ error: "Failed to capture order." });
+        console.error("Failed to create order:", error);
+        res.status(500).json({ error: "Failed to capture order." });
     }
 });
     
@@ -494,6 +478,14 @@ app.post('/signup/:oid', function(req, res){
     authenticate(req.body.username, req.body.password, "Sign up", insertusername, "username", [req, res])
 })
 
+app.post('/getprice', (req, res)=>{
+    sql = `SELECT * FROM orders WHERE orderID = '${req.body.oid}'`
+    console.log(sql)
+    db.all(sql, (err, data)=>{
+      price = calculatePrice(data[0])
+      res.status(200).json(price);
+    })
+})
 
 // Booster Logins
 app.post("/boosterlogin", (req, res) =>{
