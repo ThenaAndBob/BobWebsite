@@ -91,7 +91,7 @@
         <div class="formcontainer">
             <div class="logo"></div>
             <div class="title"><%=formtype%></div>
-            <a href="./signup" class="changelink" id="changelink">test</a>
+            <a href="../signup" class="changelink" id="changelink">test</a>
             <form class="form" action="/login" method="post" name="regForm" autocomplete="off" id="form">              
                 <div class="form-group">
                     <input type="text" name="username" class="form-control" id="username">
@@ -106,6 +106,8 @@
     <script>
         var problem = '<%-problem%>'
         var formtype = '<%-formtype%>'
+        var orderID = '<%-orderID%>'
+        console.log(orderID)
         var changelink = document.getElementById("changelink")
         console.log(formtype)
         if (problem != ""){
@@ -116,8 +118,8 @@
         } else if (formtype == "Sign up"){
             console.log("sign")
             changelink.innerHTML = "Already have an account? Log in"
-            changelink.href = "./login"
-            document.getElementById("form").action = "/signup"
+            changelink.href = "../login"
+            document.getElementById("form").action = `/signup/${orderID}`
         }
     </script>
 </body>

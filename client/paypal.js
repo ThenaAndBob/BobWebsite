@@ -1,3 +1,5 @@
+console.log(oid)
+
 window.paypal
   .Buttons({
     async createOrder() {
@@ -12,16 +14,16 @@ window.paypal
           body: JSON.stringify({
             cart: [
               {
-                id: "YOUR_PRODUCT_ID",
+                id: 1,
                 quantity: 1,
-                price: getso(),
+                oid: oid,
               },
             ],
           }),
         });
         
         const orderData = await response.json();
-        
+        console.log(orderData)
         if (orderData.id) {
           return orderData.id;
         } else {
@@ -66,17 +68,32 @@ window.paypal
         } else {
           // (3) Successful transaction -> Show confirmation or thank you message
           // Or go to another URL:  actions.redirect('thank_you.html');
-          const transaction =
+          /* const transaction =
             orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
             orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
           resultMessage(
             `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`,
-          );
-          console.log(
+          ); */
+          fetch('/login', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              password: password,
+            }),
+          }).then(res => res.text()).then(htmlStr => {
+            document.open();
+            document.write(htmlStr);
+            document.close();
+          })
+          
+/*           console.log(
             "Capture result",
             orderData,
             JSON.stringify(orderData, null, 2),
-          );
+          ); */
         }
       } catch (error) {
         console.error(error);

@@ -1,2 +1,2 @@
-var msg = require('./test.js')
-console.log(msg)
+a = null
+console.log(!a)

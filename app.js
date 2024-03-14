@@ -55,7 +55,7 @@ function authenticate(username, password, type, callback, usertype, extraparams=
             db.all("SELECT username FROM users WHERE username = '" + username + "'", (err, data) =>{
                 if (data.length == 1){
                     // Username already exists
-                    callback("Username already exists", extraparams, type)
+                    callback("Username already exists", extraparams)
                 } else {
                     db.run("INSERT INTO users VALUES ('" + username + "', '" + password + "');", () =>{
                         callback("in", extraparams)
@@ -95,7 +95,8 @@ function getchatlogs(result, extraparams, formtype, usertype="username"){
         res = extraparams[1]
         res.render("login.ejs", {
             problem: result,
-            formtype: formtype
+            formtype: formtype,
+            orderID: "",
         })
         res.end()
     } else { // Getting chat logs
@@ -104,7 +105,7 @@ function getchatlogs(result, extraparams, formtype, usertype="username"){
         var details = ""
         db.serialize(() =>{
             db.all(`SELECT chatID, boostername FROM chatconnection WHERE ${usertype} = '${username}';`, (err, all) =>{
-                console.log("all = " + all)   
+                console.log(all)   
                 if (all.length == 0){
                     setupchatconnection(username, extraparams)
                     return
@@ -193,7 +194,7 @@ const generateAccessToken = async () => {
   * Create an order to start the transaction.
   * @see https://developer.paypal.com/docs/api/orders/v2/#orders_create
   */
-const createOrder = async (cart) => {
+const createOrder = async (cart, price) => {
 	// use the cart information passed from the front-end to calculate the purchase unit details
 	console.log(
 		"shopping cart information passed from the frontend createOrder() callback:",
@@ -201,33 +202,34 @@ const createOrder = async (cart) => {
 	);
 	const accessToken = await generateAccessToken();
 	const url = `${base}/v2/checkout/orders`;
+    console.log(price)
 	const payload = {
 		intent: "CAPTURE",
 		purchase_units: [
 		{
 			amount: {
-			currency_code: "USD",
-			value: cart[0].price,
+			currency_code: "EUR",
+			value: price,
 			},
 		},
 		],
-};
+    };
 
-const response = await fetch(url, {
-	headers: {
-	"Content-Type": "application/json",
-	Authorization: `Bearer ${accessToken}`,
-	// Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
-	// https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
-	// "PayPal-Mock-Response": '{"mock_application_codes": "MISSING_REQUIRED_PARAMETER"}'
-	// "PayPal-Mock-Response": '{"mock_application_codes": "PERMISSION_DENIED"}'
-	// "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
-	},
-	method: "POST",
-	body: JSON.stringify(payload),
-});
+    const response = await fetch(url, {
+        headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        // Uncomment one of these to force an error for negative testing (in sandbox mode only). Documentation:
+        // https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
+        // "PayPal-Mock-Response": '{"mock_application_codes": "MISSING_REQUIRED_PARAMETER"}'
+        // "PayPal-Mock-Response": '{"mock_application_codes": "PERMISSION_DENIED"}'
+        // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+        },
+        method: "POST",
+        body: JSON.stringify(payload),
+    });
 
-return handleResponse(response);
+    return handleResponse(response);
 };
     
   /**
@@ -249,9 +251,9 @@ const captureOrder = async (orderID) => {
 		// "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
 		// "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
 		},
-});
+    });
 
-return handleResponse(response);
+    return handleResponse(response);
 };
     
 async function handleResponse(response) {
@@ -267,19 +269,141 @@ async function handleResponse(response) {
 	}
 }
     
+function calculatePrice(body){
+    var price = 0
+    var ranks = []
+    var prices = []
+    var divperrank = 0
+    var numranks = 0
+    var winsperdiv = 0
+    if (body.game == "league"){
+        divperrank = 4
+        numranks = 8
+        winsperdiv = 4
+        ranks = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond", "Master", "IV", "III", "II", "I", " "]
+        prices = [3.2, 3.4, 3.6, 3.8, 
+            4, 4.3, 4.6, 4.9, 
+            5, 5.3, 5.6, 5.9, 
+            8, 8.4, 8.8, 9.2, 
+            11, 12, 13, 14, 
+            18, 19, 20, 21, 
+            30, 40, 50, 60, 
+            70]
+    } else if (body.game == "overwatch"){
+        divperrank = 5
+        numranks = 9 // change this to 10 FIX NEW OVERWATCH RANK
+        winsperdiv = 4
+        ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "5", "4", "3", "2", "1"]
+        prices = [2.2, 2.4, 2.6, 2.8,  
+                3, 3.25, 3.5, 3.75, 4,  
+                4.33, 4.66, 5, 5.33, 5.66,  
+                6,6.4,6.8,7.2,7.6,
+                8, 8.5, 9, 9.5, 10,
+                11, 12, 13, 14, 15,
+                18, 21, 23, 25, 27, 32]
+    } else if (body.game == "valorant"){
+        divperrank = 3
+        numranks = 8
+        winsperdiv = 4
+        ranks = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Ascendant", "Immortal", "1", "2", "3", " "]
+        prices =   [3.2, 3.4, 3.6, 
+                    4.3, 4.6, 4.9, 
+                    5.3, 5.6, 5.9, 
+                    8.4, 8.8, 9.2, 
+                    12, 13, 14, 
+                    19, 20, 21, 
+                    40, 50, 60, 
+                    70]
+    }
+    start = body.start.split("+")
+    end = body.end.split("+")
+
+    if (start[0] == "Master" || start[0] == "Immortal"){
+        price = body.addwins*(15 + body.lp/40)
+    } else {
+        startIndex = ranks.indexOf(start[0])*divperrank + ranks.indexOf(start[1])-numranks;
+        endIndex = ranks.indexOf(end[0])*divperrank + ranks.indexOf(end[1])-numranks;
+        if (end[1] == " "){
+            endIndex -= divperrank;
+        }
+        console.log(startIndex,endIndex, prices, price)
+        prices.slice(startIndex, endIndex).forEach(x => price+=x);
+        price += body.addwins*prices[endIndex]/winsperdiv
+    }
+
+    if (body.duo == "D"){
+        price *= 1.5
+    }
+    console.log(price)   
+    price = Math.round((price + Number.EPSILON) * 100) / 100
+
+    return price  
+}
   
-  
-  
-  
-  
-  
+function getRandomInt(max) { 
+    return Math.floor(Math.random() * max);
+}
+
+function insertusername(result, extraparams){
+    console.log("started insertusername")
+    req = extraparams[0]
+    res = extraparams[1]
+    if (result != "in"){ // check if login was a succes
+        console.log(formtype)
+        res.render("login.ejs", {
+            problem: result,
+            formtype: "Sign up",
+            orderID: req.params.oid,
+        })
+        res.end()
+    } else {
+        console.log(`UPDATE orders SET username = '${req.body.username}' WHERE orderID = '${req.params.oid}'`)
+        db.serialize(() =>{
+            sql = `SELECT username FROM orders WHERE orderID = '${req.params.oid}'`
+            console.log(sql)
+            db.all(sql, (err, data) =>{
+                console.log(data)
+                if (!data[0].username){
+                    db.run(`UPDATE orders SET username = '${req.body.username}' WHERE orderID = '${req.params.oid}'`, ()=>{
+                        getpayment(req, res)
+                    })
+                } else {
+                    console.log("haxor? in insertusername")
+                }
+            })
+        })
+    }
+}
+
+function getpayment(req, res){
+    res.render("checkout.ejs", {
+        oid: req.params.oid,
+        username: req.body.username,
+        password: req.body.password,
+    })
+}
+
+app.post("/checkout", async (req, res) =>{
+    orderID = getRandomInt(100000000)
+    d = req.body
+    sql = `INSERT INTO orders (orderID, game, start, end, duo, addwins, currprogress) VALUES ('${orderID}', '${d.game}', '${d.start}', '${d.end}', '${d.duo}', '${d.addwins}', '${d.currprogress}')`
+    console.log(sql)
+    db.run(sql) // Maybe add role and character
+    res.status(200).json(orderID)
+})
   
 app.post("/api/orders", async (req, res) => {
     try {
       // use the cart information passed from the front-end to calculate the order amount detals
+      console.log("in /api/orders")
       const { cart } = req.body;
-      const { jsonResponse, httpStatusCode } = await createOrder(cart);
-      res.status(httpStatusCode).json(jsonResponse);
+      sql = `SELECT * FROM orders WHERE orderID = '${cart[0].oid}'`
+      console.log(sql)
+      db.all(sql, async (err, data)=>{
+        price = calculatePrice(data[0])
+        const { jsonResponse, httpStatusCode } = await createOrder(cart, price);
+        res.status(httpStatusCode).json(jsonResponse);
+      })
     } catch (error) {
       console.error("Failed to create order:", error);
       res.status(500).json({ error: "Failed to create order." });
@@ -287,6 +411,7 @@ app.post("/api/orders", async (req, res) => {
   });
     
 app.post("/api/orders/:orderID/capture", async (req, res) => {
+    console.log("api capture")
     try {
       const { orderID } = req.params;
       const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
@@ -321,30 +446,52 @@ app.get('/valorant', (req, res) =>{
     res.sendFile('valorant.html', {root: __dirname})
 })
 
+app.get('/client/paypal.js', (req, res) =>{
+    res.sendFile('/client/paypal.js', {root: __dirname})
+})
+
 app.get('/login', (req, res) => {
     res.render("login.ejs", {
         formtype: "Log in",
-        problem: ""
+        problem: "",
+        orderID: "",
     })
 })
 
-app.get('/signup', (req, res) =>{
+app.get('/signup/:oid', (req, res) =>{
+    console.log(req.params)
     res.render("login.ejs", {
         formtype: "Sign up",
-        problem: ""
+        problem: "",
+        orderID: req.params.oid,
     })
 })
 
+app.get('/overwatch.js', (req, res) =>{
+    res.sendFile("overwatch.js", {root: __dirname})
+})
+
+app.get('/league.js', (req, res) =>{
+    res.sendFile("league.js", {root: __dirname})
+})
+
+app.get('/valorant.js', (req, res) =>{
+    res.sendFile("valorant.js", {root: __dirname})
+})
+
+app.get('/checkout.js', (req, res) =>{
+    res.sendFile("checkout.js", {root: __dirname})
+})
 app.post('/login', function(req,res){
     // Check if the username exists -> IF no return error, ELSE check if password hashes match, if no return error ELSE send to "livechats" page.
-
     // Needs a captcha of some sort FIX
     authenticate(req.body.username, req.body.password, "Log in", getchatlogs, "username", [req, res]) // FIX
 });
 
-app.post('/signup', function(req, res){
+app.post('/signup/:oid', function(req, res){
     // Check if username exists -> IF yes return error, ELSE create new user in database and send to "livechats" page
-    authenticate(req.body.username, req.body.password, "Sign up", getchatlogs, "username", [req, res])
+    console.log(req.params)
+    authenticate(req.body.username, req.body.password, "Sign up", insertusername, "username", [req, res])
 })
 
 
