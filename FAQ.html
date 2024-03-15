@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Dangrek' rel='stylesheet'>
+    <link rel="stylesheet" href="/banner.css">
+    <title>Frequently Asked Questions</title>
+
+    <style>
+        body {
+            background-color: #04131d;
+        }
+
+        .container {
+            position: absolute;
+            top:100px;
+            left: 25%;
+            transform: translateX(-50%);
+            width:50%;
+            height: 100%;
+            color: #d29c4b;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .title{
+            font-size: 80px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+            text-decoration: underline;
+            text-align: center;
+        }
+
+        .question{
+            font-size: 25px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .answer{
+            font-size: 20px;
+            color: white;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="banner FAQ">
+        <a class="nodec" href="https://bobsboosting.com">Home</a> 
+        <a class="nodec" href="https://bobsboosting.com/login">Login</a>
+        <a class="nodec" href="https://discord.gg/uvJRspbxuB">Discord</a> 
+        <a class="nodec" href="https://bobsboosting.com/FAQ">FAQ</a>
+    </div>
+    
+    <div class="container" id="container">
+
+
+        <div class="title" id="title">Frequently Asked Questions</div>
+
+        <br>
+        <div class="question">I don't want to share my account details, could I get boosted in another way?</div><br>
+        <div class="answer">Absolutely! Our site offers high-quality duo boosting services. To select this option, please choose the 'Duo Boosting' option before checking out.</div>
+
+        <br><br><br><br>
+
+        <div class="question">Do you use cheats?</div><br>
+        <div class="answer">No, we have never and will never use cheats or engage in any activity which may risk a clients account.</div>
+
+        <br><br><br><br>
+
+        <div class="question">Why choose Bob's Boosting?</div><br>
+        <div class="answer">Yes, our services offer a versatile workspace. To schedule which times you wish to play, please talk with the current booster.</div>
+
+        <br><br><br><br>
+
+        <div class="question">Where can I contact customer support?</div><br>
+        <div class="answer">Yes, our services offer a versatile workspace. To schedule which times you wish to play, please talk with the current booster.</div>
+
+        <br><br><br><br>
+
+        <div class="question">Could I choose specific characters for the boosters to play?</div><br>
+        <div class="answer">Yes, our services offer a versatile workspace. To schedule which times you wish to play, please talk with the current booster.</div>
+
+        <br><br><br><br>
+
+        <div class="question">Are there any risks?</div><br>
+        <div class="answer">We have never seen an account get banned due to boosting. But we do offer the option to use VPNs during the boost as an extra safety precaution.</div>
+
+        <br><br><br><br>
+
+        <div class="question">Could I play while the order is ongoing?</div><br>
+        <div class="answer">Yes, our services offer a versatile workspace. To schedule which times you wish to play, please talk with the current booster.</div>
+
+
+
+    </div>
+
+    <script>
+        function reformat(){
+            var title = document.getElementById("title")
+            var container = document.getElementById("container")
+            var cons = container.style
+            if (window.innerWidth < 1100) {
+                cons.left = "5%"
+                cons.width = "90%"
+                cons.transform = "translateX(0)"
+            } else {
+                title.style.textAlign = "center"
+                cons.left = "50%"
+                cons.width = "50%"
+                cons.transform = "translateX(-50%)"
+            }
+        }
+        reformat()
+        window.onresize = reformat
+    </script>
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 .banner {
     width: 30%;
-    min-width: 550px;
+    min-width: 450px;
     height: 55px;
     font-size: 30px;
     font-family: 'Dangrek';
@@ -28,11 +28,16 @@ a.nodec, a.nodec:hover, a.nodec:visited, a.nodec:active {
 }
 
 .l{
-    color: #d29c4b;
+    color: white;
     top: 25px;
     border: 2px solid #d29c4b;
     border-radius: 5px;
     background-color: #04131d;
+}
+
+.FAQ{
+    color: white;
+    top: 15px;
 }
 
 /*#d29c4b   #04131d*/

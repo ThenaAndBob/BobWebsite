@@ -471,6 +471,10 @@ app.get('/banner.css', (req, res)=>{
     res.sendFile("banner.css", {root: __dirname})
 })
 
+app.get('/FAQ', (req, res)=>{
+    res.sendFile("FAQ.html", {root: __dirname})
+})
+
 app.post('/login', function(req,res){
     // Check if the username exists -> IF no return error, ELSE check if password hashes match, if no return error ELSE send to "livechats" page.
     // Needs a captcha of some sort FIX

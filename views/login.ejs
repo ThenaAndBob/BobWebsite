@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Dangrek' rel='stylesheet'>
+    <link rel="stylesheet" href="/banner.css">
+    <title>Login</title>
 
     <style>
+        body {
+            background-color: #04131d;
+        }
         .form {
             text-align: center;
             width: 90%;
@@ -24,16 +29,6 @@
             font-size: 15px;
         }
 
-        .banner {
-            width: 100vw;
-            color: #04131d;
-            height: 35px;
-            background-color: #d29c4b;
-            font-size: 30px;
-            font-family: Impact,'Arial Narrow Bold', sans-serif;
-            word-spacing: 20px;
-        }
-
         .container {
             position: absolute;
             top:0px;
@@ -46,20 +41,19 @@
             text-align: center;
             flex-wrap: wrap;
             justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .formcontainer {
-            border: 5px solid #d29c4b;
-            top: 30%;
+            top: 200px;
             position: absolute;
-            width: 25%;
             min-width: 400px;
             min-height: 358px;
-            height: 30%
+            height: 400px;
         }
 
         .title{
-            font-size: 30px;
+            font-size: 120px;
             margin: 15px;
             font-family: Impact, 'Arial Narrow Bold', sans-serif;
         }
@@ -68,17 +62,12 @@
             background-color: #0f496f;
             border: 3px solid #d29c4b;
             border-radius: 5px; 
-            color: black;
             padding: 16px 32px;
             text-decoration: none;
             cursor: pointer;
             margin: 10px;
-            font-family: sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             font-size: 17px;
-        }
-
-        .changelink{
-            color: white;
         }
 
         .info{
@@ -92,22 +81,26 @@
 <body>
 
     <div class="container">
-        <div class="banner">
-            I will put some stuff up here at some point 
+        <div class="banner l">
+            <a class="nodec" href="https://bobsboosting.com">Home</a> 
+            <a class="nodec" href="https://bobsboosting.com/login">Login</a>
+            <a class="nodec" href="https://discord.gg/uvJRspbxuB">Discord</a> 
+            <a class="nodec" href="https://bobsboosting.com/FAQ">FAQ</a>
         </div>
 
         <div class="formcontainer">
-            <div class="logo"></div>
-            <div class="title"><%=formtype%></div>
+            <div class="title" id="title">Login</div>
             <div class="info" id="info"></div>
-            <form class="form" action="/login" method="post" name="regForm" autocomplete="off" id="form">              
+            <form class="form" action="/login" method="post" name="regForm" autocomplete="off" id="form">     
                 <div class="form-group">
-                    <input type="text" name="username" class="form-control" id="username">
-                    <input type="text" name="password" class="form-control" id="password">
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Username or Email">
+                    <input type="text" name="password" class="form-control" id="password" placeholder="Password">
                 </div>
                 <div id="formerror"></div>
                 <button class="bob" type="submit" id="submitbutton"><%=formtype%></button>
             </form>   
+            <div id=disclaimer></div>
+            <br><br>
         </div> 
     </div>
 
@@ -123,8 +116,9 @@
         }
         if (formtype == "Sign up"){
             document.getElementById("form").action = `/signup/${orderID}`
-            document.getElementById("submitbutton").innerHTML = formtype + " and proceed to checkout."
-            document.getElementById("info").innerHTML = "Create an account to access your dashboard upon payment <br> OR skip and proceed to checkout to use Discord chat instead <br><br>"
+            document.getElementById("title").innerHTML = "Signup"
+            document.getElementById("info").innerHTML = "OR <br><br> Use <a href='https://discord.gg/uvJRspbxuB'> Discord </a> chat instead by providing your Order ID: <%=orderID%> <br>"
+            document.getElementById("disclaimer").innerHTML = "Sign up with email or remember your Order ID incase you forget your password!"
         }
     </script>
 </body>
