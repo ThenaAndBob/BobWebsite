@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Dangrek' rel='stylesheet'>
+    <link rel="stylesheet" href="/banner.css">
     <title>Bob's Boosting</title>
     
     <style>
 
         body {
-            background-image: url('https://i.imgur.com/5uIKc6y.png');
+            background-image: url('https://i.imgur.com/Jy92qel.png');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -16,7 +18,7 @@
         }
 
         .container {
-            top: 120px;
+            top: 150px;
             position: relative;
             display: flex;
             text-align: center;
@@ -139,15 +141,28 @@
           position: relative;
         }
 
+        h1 {
+            color: #d29c4b; 
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+            text-align: center; 
+            text-shadow: 3px 3px 0px black;
+        }
+
     </style>
 
 </head>
 
 <body>
+    <div class="banner l">
+        <a class="nodec" href="https://bobsboosting.com">Home</a> 
+        <a class="nodec" href="https://bobsboosting.com/FAQ">Login</a>
+        <a class="nodec" href="https://discord.gg/uvJRspbxuB">Discord</a> 
+        <a class="nodec" href="https://bobsboosting.com/login">FAQ</a>
+    </div>
     <div class="container">
         <div id="d1" class="gameButton" >
             <div class="currentrank">
-                <h1 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-align: center;"><b>Current Rank</b></h1>
+                <h1><b>Current Rank</b></h1>
                 <div id="rank1" class="selected iron"></div>
                 <div id="rankNumber1" style="font-size: 40px; font-family: 'Times New Roman', Times, serif; color: #d29c4b;">IV</div>
                 <div onclick="checkout()" class="rankbuttons"> 
@@ -171,7 +186,7 @@
 
         <div id="d2" class="gameButton" >
             <div class="currentrank">
-                <h1 style="color: #d29c4b; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Desired Rank</b></h1>
+                <h1><b>Desired Rank</b></h1>
                 <div id="rank2" class="selected iron"></div>
                 <div id="rankNumber2" style="font-size: 40px; font-family: 'Times New Roman', Times, serif; color: #d29c4b;">IV</div>
                 <div onclick="checkout()" class="rankbuttons"> 

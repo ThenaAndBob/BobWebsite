@@ -350,7 +350,6 @@ function insertusername(result, extraparams){
     req = extraparams[0]
     res = extraparams[1]
     if (result != "in"){ // check if login was a succes
-        console.log(formtype)
         res.render("login.ejs", {
             problem: result,
             formtype: "Sign up",
@@ -468,11 +467,16 @@ app.get('/valorant.js', (req, res) =>{
     res.sendFile("valorant.js", {root: __dirname})
 })
 
+app.get('/banner.css', (req, res)=>{
+    res.sendFile("banner.css", {root: __dirname})
+})
+
 app.post('/login', function(req,res){
     // Check if the username exists -> IF no return error, ELSE check if password hashes match, if no return error ELSE send to "livechats" page.
     // Needs a captcha of some sort FIX
     authenticate(req.body.username, req.body.password, "Log in", getchatlogs, "username", [req, res]) // FIX
 });
+
 
 app.post('/signup/:oid', function(req, res){
     // Check if username exists -> IF yes return error, ELSE create new user in database and send to "livechats" page
