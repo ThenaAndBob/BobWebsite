@@ -46,7 +46,7 @@
 </head>
 
 <body>
-    <div class="banner FAQ">
+    <div class="banner FAQ" id="banner">
         <a class="nodec" href="https://bobsboosting.com">Home</a> 
         <a class="nodec" href="https://bobsboosting.com/login">Login</a>
         <a class="nodec" href="https://discord.gg/uvJRspbxuB">Discord</a> 
@@ -101,7 +101,11 @@
             var title = document.getElementById("title")
             var container = document.getElementById("container")
             var cons = container.style
-            if (window.innerWidth < 1100) {
+            var banner = document.getElementById("banner")
+            if (window.innerWidth < 500) {
+                banner.style.wordSpacing = "0px"
+            } else {banner.style.wordSpacing = "22px"}
+            if (window.innerWidth < 1100){
                 cons.left = "5%"
                 cons.width = "90%"
                 cons.transform = "translateX(0)"
