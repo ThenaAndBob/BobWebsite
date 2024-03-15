@@ -80,7 +80,7 @@ const prices = [3.2, 3.4, 3.6,
                 70]
 function checkout(){
     if (rankStore[0]=="Immortal"){
-        s = Math.ceil(document.getElementById("quantity").value*(15 + document.getElementById("LP").value/40))
+        s = document.getElementById("quantity").value*(15 + document.getElementById("LP").value/40)
     }
     else{
         startIndex = ranks.indexOf(rankStore[0])*3 + ranks.indexOf(divisionStore[0])-8;
@@ -96,33 +96,8 @@ function checkout(){
     if (document.getElementById("duobutton").checked == true){
         so = so*1.5;
     }
-    console.log(startIndex, endIndex, prices, so, s)
+    so = Math.round((so + Number.EPSILON) * 100) / 100
     document.getElementById("price").innerHTML = "<b>€" + so + "</b>";
-}
-
-function realCheckout(){
-    var v = ""
-    if (document.getElementById("duobutton").checked == true){
-        v = "D"
-    }
-    else{
-        v = "S"
-    }
-
-    if (so > 0){
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = () => {
-        if (req.readyState == XMLHttpRequest.DONE) {
-            let a = Test.links;
-            window.location.assign(a[so-1])
-        }
-        };
-        
-        req.open("POST", "https://api.jsonbin.io/v3/b", true);
-        req.setRequestHeader("Content-Type", "application/json");
-        req.setRequestHeader("X-Master-Key", "$2a$10$mO7aTU/7xg/g.pdXQaJZxOC.pfR/S70.ApHloIuRK9jmV0kiouQ/m");
-        req.send('{"' + document.getElementById("quantity").value + v + rankStore[0] + divisionStore[0] + rankStore[1] + divisionStore[1] + '": "' + so + '"}');
-    }
 }
 
 function romanButtons(oort){

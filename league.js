@@ -63,7 +63,7 @@ function chooseRankScript(x, oneOrTwo) {
         divisionStore[oneOrTwo-1] = newRank;
     }
     conclusion = document.getElementById("conclusion");
-    conclusion.innerHTML = rankStore[0] + " " + divisionStore[0] + " " + "→" +  " " + rankStore[1] + " " + divisionStore[1]
+    conclusion.innerHTML = "<b>" + rankStore[0] + " " + divisionStore[0] + " " + "→" +  " " + rankStore[1] + " " + divisionStore[1] + "</b>"
 }
 
 // Prices 
@@ -77,7 +77,7 @@ const prices = [3.2, 3.4, 3.6, 3.8,
                 70]
 function checkout(){
     if (rankStore[0]=="Master"){
-        s = Math.ceil(document.getElementById("quantity").value*(15 + document.getElementById("LP").value/40))
+        s = document.getElementById("quantity").value*(15 + document.getElementById("LP").value/40)
     }
     else{
         startIndex = ranks.indexOf(rankStore[0])*4 + ranks.indexOf(divisionStore[0])-8;
@@ -94,8 +94,8 @@ function checkout(){
     if (document.getElementById("duobutton").checked == true){
         so = so*1.5;
     }
-    so = Math.round(so);
-    document.getElementById("checkoutPayment").innerHTML = "€" + so + " - Proceed to Payment";
+    so = Math.round((so + Number.EPSILON) * 100) / 100
+    document.getElementById("price").innerHTML = "<b>€" + so + "</b>"
 }
 
 function romanButtons(oort){

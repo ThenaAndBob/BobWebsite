@@ -202,7 +202,7 @@ const createOrder = async (cart, price) => {
 	);
 	const accessToken = await generateAccessToken();
 	const url = `${base}/v2/checkout/orders`;
-    console.log(price)
+    console.log("price = " + price)
 	const payload = {
 		intent: "CAPTURE",
 		purchase_units: [
@@ -318,8 +318,13 @@ function calculatePrice(body){
     start = body.start.split("+")
     end = body.end.split("+")
 
+    console.log(start, end)
+    console.log(body)
+
     if (start[0] == "Master" || start[0] == "Immortal"){
-        price = body.addwins*(15 + body.lp/40)
+        console.log("LP type boost", price, body.addwins*(15 + body.currprogress/40), body.addwins, body.currprogress)
+        price = body.addwins*(15 + body.currprogress/40)
+        console.log("lp price " + price)
     } else {
         startIndex = ranks.indexOf(start[0])*divperrank + ranks.indexOf(start[1])-numranks;
         endIndex = ranks.indexOf(end[0])*divperrank + ranks.indexOf(end[1])-numranks;
@@ -463,9 +468,6 @@ app.get('/valorant.js', (req, res) =>{
     res.sendFile("valorant.js", {root: __dirname})
 })
 
-app.get('/checkout.js', (req, res) =>{
-    res.sendFile("checkout.js", {root: __dirname})
-})
 app.post('/login', function(req,res){
     // Check if the username exists -> IF no return error, ELSE check if password hashes match, if no return error ELSE send to "livechats" page.
     // Needs a captcha of some sort FIX

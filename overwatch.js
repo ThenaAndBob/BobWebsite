@@ -44,7 +44,7 @@ function chooseRankScript(x, oneOrTwo) {
         rankNumber.innerHTML = newRank;
         divisionStore[oneOrTwo-1] = newRank;
     }
-    document.getElementById("conclusion").innerHTML = rankStore[0] + " " + divisionStore[0] + " " + "->" +  " " + rankStore[1] + " " + divisionStore[1]
+    document.getElementById("conclusion").innerHTML = "<b>" + rankStore[0] + " " + divisionStore[0] + " " + "->" +  " " + rankStore[1] + " " + divisionStore[1] + "</b>"
 }
 
 // Prices 
@@ -65,7 +65,8 @@ function checkout(){
     if (document.getElementById("duobutton").checked == true){
         so = so*1.5;
     }
-    document.getElementById("checkoutPayment").innerHTML = "€" + so + " - Proceed to Payment";
+    so = Math.round((so + Number.EPSILON) * 100) / 100
+    document.getElementById("price").innerHTML = "<b>€" + so + "</b>"
 }
 
 

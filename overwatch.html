@@ -104,16 +104,6 @@
             margin-left: 25%;
         }
 
-        .checkoutButton {
-            width: 90%;
-            height: 25%;
-            background-color: #000662;
-            border-radius: 5px;
-            border-color: #d29c4b;;
-            border-width: 3px;
-            
-        }
-
         .checkoutContainer{
             background-color: #04131d;
             height: 70%;
@@ -137,7 +127,19 @@
             font-size: 18px; 
             font-family: Arial, Helvetica, sans-serif;
             color: #d29c4b;
-            margin:25px;
+            margin:17px;
+        }
+
+        .price{
+          font-size: 25px;
+          font-family: sans-serif;
+          padding: 10px;
+        }
+
+        .paypalbutton{
+          width: 90%;
+          left: 5%;
+          position: relative;
         }
 
     </style>
@@ -201,17 +203,25 @@
                 <div class="extraboxes">
                     <b>Additional wins</b><input type="number" id="quantity" oninput="checkout()" name="quantity" min="0" max="4"> 
                 </div>
+                <div class="extraboxes" id="conclusion">
+                    <b>Iron 1 -> Iron 1</b>
+                </div>
 
-                <h2 id="conclusion" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"><b>Gold 5 -> Gold 5</b></h2>                
-                <button onclick="realCheckout('overwatch')" id="checkoutPayment" class="checkoutButton" style="color: #d29c4b;; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 30px;" >€0 - Proceed to Payment</button>
+                <div id="price" class="price"><b>€0</b></div>             
+                <div id="paypal-button-container" class="paypalbutton"></div>
+                Or join our <a href="https://discord.gg/uvJRspbxuB">discord</a> for discounts and other payment methods.
+                <p id="result-message"></p>
             </div>
         </div>
 
     </div>
 
-    <script type="text/javascript" src="overwatch.js"></script>
-    
-
+    <script>
+        var game = "overwatch"
+    </script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZdXAHlKKx-UUXIbN6ptjQ1j30XoTH6L6OXbocnb2y0_ewKsyDk5ggERcUY1WbkTZXusaOHYlcLPp4C6&currency=EUR&disable-funding=credit,card"></script>
+    <script src="/overwatch.js"></script>
+    <script src="/client/paypal.js"></script>
 </body>
 
 

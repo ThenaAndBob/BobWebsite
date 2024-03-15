@@ -2,7 +2,24 @@ window.paypal
         .Buttons({
             async createOrder() {
             try {
-                console.log(game, rankStore, divisionStore, duo, addwins, currprogress)
+                var v = ""
+                var lp = 0
+                try {
+                  var lpbox = document.getElementById("LP") // Is null if there is no lp value
+                  lp = Number(lpbox.value)
+                } catch{
+                  console.log("No lpbox")
+                }
+
+                var wins = document.getElementById("quantity").value
+
+                if (document.getElementById("duobutton").checked == true){
+                    v = "D"
+                }
+                else{
+                    v = "S"
+                }
+                console.log(game, rankStore, divisionStore, v, wins, lp)
                 const response = await fetch("/api/orders", {
                 method: "POST",
                 headers: {
