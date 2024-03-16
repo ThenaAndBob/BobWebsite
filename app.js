@@ -142,7 +142,7 @@ function socketauth(code, extraparams){
     }
 }
 
-function socketjoinchat(socket, username, usertype="username"){
+function socketjoinchat(socket, username, usertype="username", callback){
 	console.log("Starter socketjoinchat")
 	console.log(`SELECT chatID FROM chatconnection WHERE ${usertype} = '${username}'`)
     db.all(`SELECT chatID FROM chatconnection WHERE ${usertype} = '${username}'`, (err, chatID) =>{
@@ -150,6 +150,7 @@ function socketjoinchat(socket, username, usertype="username"){
 		console.log(`joining chat ${socket.chatID}`)
         socket.join(socket.chatID)
     })
+    callback(socket, username)
 }
 
 function updatemessages(content, sender, chatID){
@@ -381,6 +382,16 @@ function insertboost(d, orderID){
     db.run(sql) // Maybe add role and character
 }
 
+function getboost(socket, username){
+    sql = `SELECT orderID, start, end, addwins, duo FROM orders WHERE username = '${username}'`
+    console.log(sql)
+    db.all(sql, (err, data)=>{
+        if (err){return}
+        console.log(data)
+        console.log(socket.chatID)
+        io.to(socket.id).emit("boostdetails", data[0])  
+    })
+}
   
 app.post("/api/orders", async (req, res) => {
     try {
@@ -516,7 +527,7 @@ io.on("connection", socket => {
     console.log(socket.id)
     socket.on("authenticate", (username, password, usertype) =>{
         authenticate(username, password, "Log in", socketauth, "username", [username, socket])
-        socketjoinchat(socket, username, usertype)
+        socketjoinchat(socket, username, usertype, getboost)
     })
     socket.on("sendMessage", (content) =>{
         if (socket.username != undefined){
