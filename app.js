@@ -471,6 +471,10 @@ app.get('/banner.css', (req, res)=>{
     res.sendFile("banner.css", {root: __dirname})
 })
 
+app.get('/reformat.js', (req, res)=>{
+    res.sendFile("reformat.js", {root: __dirname})
+})
+
 app.get('/FAQ', (req, res)=>{
     res.sendFile("FAQ.html", {root: __dirname})
 })

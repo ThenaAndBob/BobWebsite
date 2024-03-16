@@ -153,7 +153,7 @@
 </head>
 
 <body>
-    <div class="banner l">
+    <div class="banner l" id="banner">
         <a class="nodec" href="https://bobsboosting.com">Home</a> 
         <a class="nodec" href="https://bobsboosting.com/login">Login</a>
         <a class="nodec" href="https://discord.gg/uvJRspbxuB">Discord</a> 
@@ -239,6 +239,16 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AZdXAHlKKx-UUXIbN6ptjQ1j30XoTH6L6OXbocnb2y0_ewKsyDk5ggERcUY1WbkTZXusaOHYlcLPp4C6&currency=EUR&disable-funding=credit,card"></script>
     <script src="/league.js"></script>
     <script src="/client/paypal.js"></script>
+    <script src="/reformat.js"></script>
+    <script>
+        var banner = document.getElementById("banner")
+        bannerformat()
+        function reformat(){
+            updateButtonSize()
+            bannerformat()
+        }
+        window.onresize = reformat;
+    </script>
 
     
 

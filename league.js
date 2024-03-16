@@ -114,6 +114,5 @@ function romanButtons(oort){
 document.getElementById("quantity").value = 0;
 document.getElementById("duobutton").checked = false;
 updateButtonSize();
-window.onresize = updateButtonSize;
 
 
