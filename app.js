@@ -383,7 +383,7 @@ function insertboost(d, orderID){
 }
 
 function getboost(socket, username){
-    sql = `SELECT orderID, start, end, addwins, duo FROM orders WHERE username = '${username}'`
+    sql = `SELECT orderID, game, start, end, addwins, duo FROM orders WHERE username = '${username}'`
     console.log(sql)
     db.all(sql, (err, data)=>{
         if (err){return}

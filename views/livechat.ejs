@@ -26,6 +26,7 @@
             text-align: center;
             flex-wrap: wrap;
             justify-content: center;
+            font-family: sans-serif
         }
 
         .boostdetails {
@@ -94,6 +95,42 @@
             font-family: sans-serif
         }
 
+        .btitle{
+            font-size: 50px;
+            margin: 15px;
+        }
+
+        .rankimage{
+            aspect-ratio: 1/1;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .startend{
+            width:100%;
+            flex-wrap: nowrap;
+            display: flex;
+            margin: 0px;
+            align-items: center;
+        }
+
+        .orderID{
+            color: white;
+        }
+
+        .arrow{
+            width: 50%;
+            height: 10%;
+            position: relative;
+        }
+
+        .caption{
+            font-size: 25px;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+
     </style>
 </head>
 
@@ -106,6 +143,25 @@
             <a class="nodec" href="https://bobsboosting.com/FAQ">FAQ</a>
         </div>
         <div class="boostdetails" id="boostinfo">
+            <div class="btitle" id="btitle">Thank you for choosing Bob's Boosting!</div>
+            <div class="orderID">Your Order ID: <b>AA089GU08AGUAW0</b></div><br><br><br>
+            <div class="startend">
+
+                <span>
+                    <img src="https://i.imgur.com/iltHUX5.png" class="rankimage" id="ri1">
+                    <div class="caption" id="d1">Iron IV</div>
+                </span>
+
+                <img src="https://i.imgur.com/nle3vdt.png" class="arrow sameline">
+
+                <span>
+                    <img src="https://i.imgur.com/iltHUX5.png" class="rankimage" id="ri2">
+                    <div class="caption" id="d2">Iron IV</div>
+                </span>
+                
+            </div>
+            <br><br>
+            <div class="addinfo" id="adinfo">+4 Wins</div>
         </div>
 
         <div class="chat">
@@ -135,6 +191,43 @@
         var usertype = '<%-usertype%>'
         var chat = '<%-chat%>'
         var temp = ""
+
+        var d1 = document.getElementById("d1")
+        var d2 = document.getElementById("d2")
+        var rimg1 = document.getElementById("ri1")
+        var rimg2 = document.getElementById("ri2")
+        var adinfo = document.getElementById("adinfo")
+        var links = {
+            "lIron": 'https://i.imgur.com/Tj2BpH3.png',
+            "lBronze": 'https://i.imgur.com/sPrqDTq.png',
+            "lSilver": 'https://i.imgur.com/NiCijlD.png',
+            "lGold": 'https://i.imgur.com/9wXycG8.png',
+            "lPlatinum": 'https://i.imgur.com/z4I2pt9.png',
+            "lEmerald": 'https://i.imgur.com/iltHUX5.png',
+            "lDiamond": 'https://i.imgur.com/fy4NjAA.png',
+            "lMaster": 'https://i.imgur.com/gAhdiIa.png',
+            "vIron": 'https://i.imgur.com/LXeIjWK.png',
+            "vBronze": 'https://i.imgur.com/CnhEMym.png',
+            "vSilver": 'https://i.imgur.com/eZKRCy3.png',
+            "vGold": 'https://i.imgur.com/fRClGAd.png',
+            "vPlatinum":'https://i.imgur.com/y35FmjI.png',
+            "vDiamond":'https://i.imgur.com/F1yuoUM.png',
+            "vAscendant":'https://i.imgur.com/WkKkMWr.png',
+            "vImmortal": 'https://i.imgur.com/HTJBoBR.png',
+            "oBronze": 'https://i.imgur.com/tAGTnxa.png',
+            "oSilver": 'https://i.imgur.com/wqWzIMZ.png',
+            "oGold": 'https://i.imgur.com/5aLApsB.png',
+            "oPlatinum": 'https://i.imgur.com/KctiVAu.png',
+            "oDiamond": 'https://i.imgur.com/rGbaSYN.png',
+            "oMaster": 'https://i.imgur.com/kl5YjI0.png',
+            "oGrandmaster": 'https://i.imgur.com/qdWlM12.png',
+        }
+        var startR = ""
+        var startD = ""
+        var endR = ""
+        var endD = ""
+        var game = "";
+
 
         if (chat.length > 0){
             chat = chat.slice(0, -1)
@@ -177,8 +270,25 @@
         }
 
         function formatboostinfo(boost){
-            var btext = boost.orderID + boost.start + boost.end + boost.addwins + boost.duo
-            boostinfo.innerHTML = btext
+            [startR, startD] = boost.start.split("+");
+            [endR, endD] = boost.end.split("+")
+            game = boost.game[0]
+
+            console.log(game + startR)
+            console.log(game + endR)
+
+            rimg1.src = links[game + startR]
+            rimg2.src = links[game + endR]
+
+            d1.innerHTML = startD
+            d2.innerHTML = endD
+
+            if (boost.duo == "S"){
+                adinfo.innerHTML = "Solo Boost<br>"
+            } else{
+                adinfo.innerHTML = "Duo Boost<br>"
+            }
+            adinfo.innerHTML += "Additional wins: " + boost.addwins
         }
 
 
