@@ -156,7 +156,7 @@ function socketjoinchat(socket, username, usertype="username", callback){
 		console.log(`joining chat ${socket.chatID}`)
         socket.join(socket.chatID)
     })
-    callback(socket, username)
+    callback(socket, username, usertype)
 }
 
 function updatemessages(content, sender, chatID){
@@ -391,17 +391,73 @@ function insertboost(d, orderID){
     db.run(sql) // Maybe add role and character
 }
 
-function getboost(socket, username){
-    sql = `SELECT orderID, game, start, end, addwins, duo FROM orders WHERE username = '${username}'`
+function getboost(socket, username, usertype){
+    sql = `SELECT username FROM chatconnection WHERE ${usertype} = '${username}'`
     console.log(sql)
     db.all(sql, (err, data)=>{
-        if (err){return}
-        console.log(data)
-        console.log(socket.chatID)
-        io.to(socket.id).emit("boostdetails", data[0])  
+        username = data[0].username
+        sql = `SELECT orderID, game, start, end, addwins, duo FROM orders WHERE username = '${username}'`
+        console.log(sql)
+        db.all(sql, (err, data)=>{
+            if (err){return}
+            console.log(data)
+            console.log(socket.chatID)
+            io.to(socket.id).emit("boostdetails", data[0])  
+        })
     })
 }
   
+function admin(result, extraparams, type, usertype="boostername"){
+    [req, res] = extraparams
+    if (result = "in"){
+        // render admin portal
+        res.render("adminportal", {
+            password: req.body.password,
+        })
+    } else {
+        res.end()
+    }
+}
+
+function getorderschat(result, extraparams, type, usertype="boostername"){
+    [req, res] = extraparams
+    if (result = "in"){    
+        response = ""
+        db.serialize(()=>{
+            sql = `SELECT * FROM chatconnection;`
+            console.log(sql)
+            db.all(sql, (err, data)=>{
+                console.log(data)
+                sql = `SELECT * FROM orders WHERE paid ='1';`
+                console.log(sql)
+                db.all(sql, (err, data2)=>{
+                    response = {
+                        cart: [data, data2]
+                    }
+                    res.status(200).json(response)
+                }) 
+            })
+        })
+    } else {
+        res.end()
+    }
+}
+
+function assignboosters(){
+    sql = `SELECT chatID FROM chatconnection WHERE boostername is NULL`
+    console.log(sql)
+    db.each(sql, (err, chatIDL)=>{
+        chatID = chatIDL.chatID
+        console.log("err: " + err)
+        sql = `UPDATE chatconnection SET boostername = 'deamerd${chatID}' WHERE chatID = '${chatID}'`
+        console.log(sql)
+        db.run(sql)
+        sql2 = `INSERT INTO boosters VALUES ('deamerd${chatID}', '${hash("AGHWOAHGSLADJLFAKWHFLKASJHLKOJZAW")}')`
+        console.log(sql2)
+        db.run(sql2)
+    })
+}
+
 app.post("/api/orders", async (req, res) => {
     try {
         // use the cart information passed from the front-end to calculate the order amount detals
@@ -439,7 +495,9 @@ app.get("/paypal", (req, res) => {
     res.sendFile(path.resolve("./client/checkout.html"));
 });
 
-
+app.post("/assignboosters", (req,res)=>{
+    assignboosters()
+})
 
 // server shit
 app.get('/', (req, res) =>{
@@ -527,13 +585,21 @@ app.post('/getprice', (req, res)=>{
 
 // Booster Logins
 app.post("/boosterlogin", (req, res) =>{
-	authenticate(req.body.username, req.body.password, "Log in", getchatlogs, "boostername", [req, res])
+    username = req.body.username
+    if (username == "bobadmin"){
+        authenticate(username, req.body.password, "Log in", admin, "boostername", [req, res])
+    } else{
+        authenticate(username, req.body.password, "Log in", getchatlogs, "boostername", [req, res])
+    }
 })
 
 app.get("/boosterportal", (req, res) =>{
 	res.sendFile('/boosterlogin.html', {root: __dirname})
 })
 
+app.post("/orderschat", (req,res)=>{
+    authenticate("bobadmin", req.body.password, "Log in", getorderschat, "boostername", [req, res])
+})
 
 // Live chat shit
 io.on("connection", socket => {

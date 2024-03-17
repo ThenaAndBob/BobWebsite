@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+
+    <style>
+    </style>
+</head>
+<body>
+    
+    <div class="title">CHATCONNECTIONS</div>
+    <div id="chats"></div>
+    <br><br>
+    <div class="title">ORDERS</div>
+    <div id="orders"></div>
+
+    <form action="/assignboosters" method="post">
+        <button name="assignboosters">Assign boosters</button>
+    </form>
+    
+
+    <script>
+        var chatsHTML = document.getElementById("chats")
+        var ordersHTML = document.getElementById("orders")
+        var chatsList
+        var ordersList
+        var password = '<%-password%>'
+        console.log(password)
+
+        orders = fetch('/orderschat', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                password: password
+            })
+        }).then(res => res.json()).then(j => format(j))
+
+        function format(data){
+            chatsList = data.cart[0]
+            ordersList = data.cart[1]
+
+            chatsList.forEach(group => {
+                if (!group.boostername){
+                    chatsHTML.innerHTML += "THIS CHAT DOESNT HAVE A BOOSTER ASSIGNED"
+                }
+                chatsHTML.innerHTML += JSON.stringify(group) + "<br>"
+            });
+
+            ordersList.forEach(group=>{
+                ordersHTML.innerHTML += JSON.stringify(group) + "<br>"
+            })
+        }
+
+    </script>
+</body>
+</html>
