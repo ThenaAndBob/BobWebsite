@@ -54,13 +54,18 @@ function authenticate(username, password, type, callback, usertype, extraparams=
     db.serialize(() => {
         if (type == "Sign up"){
             db.all("SELECT username FROM users WHERE username = '" + username + "'", (err, data) =>{
-                if (data.length == 1){
-                    // Username already exists
-                    callback("Username already exists", extraparams)
+                if (err){
+                    console.log(err + "error in authenticate signup")
+                    callback("Invalid characters in username", extraparams, type)
                 } else {
-                    db.run("INSERT INTO users VALUES ('" + username + "', '" + password + "');", () =>{
-                        callback("in", extraparams)
-                    })
+                    if (data.length == 1){
+                        // Username already exists
+                        callback("Username already exists", extraparams)
+                    } else {
+                        db.run("INSERT INTO users VALUES ('" + username + "', '" + password + "');", () =>{
+                            callback("in", extraparams)
+                        })
+                    }
                 }
             })
         }
@@ -156,7 +161,9 @@ function socketjoinchat(socket, username, usertype="username", callback){
 
 function updatemessages(content, sender, chatID){
     console.log(content, sender, chatID)
-    db.run(`INSERT INTO messages (content, sender, chatID) VALUES ('${content}', '${sender}', '${chatID}')`)
+    db.run(`INSERT INTO messages (content, sender, chatID) VALUES ('${content}', '${sender}', '${chatID}')`, (err)=>{
+        console.log("error in updatemessages: " + err)
+    })
 }
   
 function setupchatconnection(username, extraparams, usertype="username"){
@@ -530,12 +537,13 @@ app.get("/boosterportal", (req, res) =>{
 
 // Live chat shit
 io.on("connection", socket => {
-    console.log(socket.id)
+    console.log("socketid " + socket.id)
     socket.on("authenticate", (username, password, usertype) =>{
         authenticate(username, password, "Log in", socketauth, "username", [username, socket])
         socketjoinchat(socket, username, usertype, getboost)
     })
     socket.on("sendMessage", (content) =>{
+        console.log("received message")
         if (socket.username != undefined){
             // Store message in database
             socket.to(socket.chatID).emit("receiveMessage", content, socket.username)

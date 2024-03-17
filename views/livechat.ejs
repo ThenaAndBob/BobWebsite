@@ -257,7 +257,9 @@
 
         socket.on("boostdetails", (boost)=>{
             console.log("boostdetails")
-            formatboostinfo(boost)
+            if (boost){
+                formatboostinfo(boost)
+            }
         })
 
         function displayMessage(msg, sender){
