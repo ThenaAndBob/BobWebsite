@@ -17,6 +17,7 @@ var cors = require('cors')
 
 // required variables
 var bodyParser = require('body-parser');
+const { error } = require('console');
 const db = new sqlite3.Database('test.db'); // This constant opening and closing might be bad FIX. IF this is slow figure out a better way ig.
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8080 } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
@@ -238,7 +239,7 @@ const createOrder = async (cart, price) => {
   * @see https://developer.paypal.com/docs/api/orders/v2/#orders_capture
   */
 const captureOrder = async (orderID) => {
-	const accessToken = await generateAccessToken();
+	const accessToken = await generateAccessToken();    
 	const url = `${base}/v2/checkout/orders/${orderID}/capture`;
 
 	const response = await fetch(url, {
@@ -399,6 +400,9 @@ app.post("/api/orders", async (req, res) => {
         console.log("in /api/orders")
         const { cart } = req.body;
         price = calculatePrice(cart[0])
+        if (price == 0){
+            throw new Error("Price is 0")
+        }
         const { jsonResponse, httpStatusCode } = await createOrder(cart, price);
         insertboost(cart[0], jsonResponse.id)
         res.status(httpStatusCode).json(jsonResponse);
