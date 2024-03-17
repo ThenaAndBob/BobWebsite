@@ -378,6 +378,7 @@ function insertusername(result, extraparams){
 }
 
 function insertboost(d, orderID){
+    console.log("start instertboost.")
     sql = `INSERT INTO orders (orderID, paid, game, start, end, duo, addwins, currprogress) VALUES ('${orderID}', 1, '${d.game}', '${d.start}', '${d.end}', '${d.duo}', '${d.addwins}', '${d.currprogress}')`
     console.log(sql)
     db.run(sql) // Maybe add role and character
@@ -404,6 +405,7 @@ app.post("/api/orders", async (req, res) => {
             throw new Error("Price is 0")
         }
         const { jsonResponse, httpStatusCode } = await createOrder(cart, price);
+        console.log("AAAAAAAAAAAAAAA")
         insertboost(cart[0], jsonResponse.id)
         res.status(httpStatusCode).json(jsonResponse);
     } catch (error) {
