@@ -92,7 +92,7 @@ window.paypal
                 } else {
                 // (3) Successful transaction -> Show confirmation or thank you message
                 // Or go to another URL:  actions.redirect('thank_you.html');
-                window.location.href = `http://localhost:8080/signup/${orderData.id}`
+                window.location.href = `https://bobsboosting.com/signup/${orderData.id}`
                 }
             } catch (error) {
                 console.error(error);
