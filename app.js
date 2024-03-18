@@ -279,6 +279,9 @@ async function handleResponse(response) {
 }
     
 function calculatePrice(body){
+    if (body.addwins < 0 || body.addwins > 5){
+        return -1
+    }
     var price = 0
     var ranks = []
     var prices = []
@@ -466,6 +469,8 @@ app.post("/api/orders", async (req, res) => {
         price = calculatePrice(cart[0])
         if (price == 0){
             throw new Error("Price is 0")
+        } else if (price == -1){
+            throw new Error("Additional wins must be between 0 and 5 inclusive")
         }
         const { jsonResponse, httpStatusCode } = await createOrder(cart, price);
         console.log("AAAAAAAAAAAAAAA")
