@@ -615,12 +615,12 @@ app.post("/orderschat", (req,res)=>{
 io.on("connection", socket => {
     console.log("socketid " + socket.id)
     socket.on("authenticate", (username, password, usertype) =>{
-        authenticate(username, password, "Log in", socketauth, "username", [username, socket])
+        authenticate(username, password, "Log in", socketauth, usertype, [username, socket])
         socketjoinchat(socket, username, usertype, getboost)
     })
     socket.on("sendMessage", (content) =>{
         console.log("received message")
-        if (socket.username != undefined){
+        if (socket.username){
             // Store message in database
             socket.to(socket.chatID).emit("receiveMessage", content, socket.username)
             updatemessages(content, socket.username, socket.chatID)
