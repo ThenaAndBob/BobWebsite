@@ -520,7 +520,7 @@ app.get('/client/paypal.js', (req, res) =>{
     res.sendFile('/client/paypal.js', {root: __dirname})
 })
 
-app.get('favicon.ico', (req, res) =>{
+app.get('/favicon.ico', (req, res) =>{
     console.log("getting logo")
     res.sendFile('favicon.ico', {root: __dirname})
 })
