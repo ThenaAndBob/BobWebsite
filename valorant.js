@@ -78,7 +78,7 @@ const prices = [3.2, 3.4, 3.6,
                 19, 20, 21, 
                 40, 50, 60, 
                 70]
-function checkout(){
+function checkout(a){
     if (rankStore[0]=="Immortal"){
         s = document.getElementById("quantity").value*(15 + document.getElementById("LP").value/40)
     }
@@ -91,6 +91,19 @@ function checkout(){
         s = 0
         prices.slice(startIndex, endIndex).forEach(x => s+=x);
         s += document.getElementById("quantity").value*prices[endIndex]/4
+
+        if (endIndex < startIndex){
+            if (a == 1){
+                chooseRankScript(ranks.indexOf(rankStore[0]),2)
+                chooseRankScript(ranks.indexOf(divisionStore[0]), 2)
+            }
+            else {
+                chooseRankScript(ranks.indexOf(rankStore[1]),1)
+                chooseRankScript(ranks.indexOf(divisionStore[1]), 1)
+            }
+            checkout()
+            return
+        }
     }
     so = s
     if (document.getElementById("duobutton").checked == true){

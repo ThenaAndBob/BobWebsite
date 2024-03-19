@@ -55,9 +55,21 @@ const prices = [2.2, 2.4, 2.6, 2.8,
                 8, 8.5, 9, 9.5, 10,
                 11, 12, 13, 14, 15,
                 18, 21, 23, 25, 27, 32]
-function checkout(){
+function checkout(a){
     startIndex = ranks.indexOf(rankStore[0])*5 + ranks.indexOf(divisionStore[0])-7;
     endIndex = ranks.indexOf(rankStore[1])*5 + ranks.indexOf(divisionStore[1])-7;
+    if (endIndex < startIndex){
+        if (a == 1){
+            chooseRankScript(ranks.indexOf(rankStore[0]),2)
+            chooseRankScript(ranks.indexOf(divisionStore[0]), 2)
+        }
+        else {
+            chooseRankScript(ranks.indexOf(rankStore[1]),1)
+            chooseRankScript(ranks.indexOf(divisionStore[1]), 1)
+        }
+        checkout()
+        return
+    }
     s = 0
     prices.slice(startIndex, endIndex).forEach(x => s+=x);
     s += document.getElementById("quantity").value*prices[endIndex]/4;
