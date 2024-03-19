@@ -84,14 +84,21 @@
             position: relative;
             width: 50%;
             left: 25%;
-            background-color: rgba(0,0,0,0.5);
+            background-color:rgba(4,19,29, 1);
+            border-radius: 10px;
+            border: 1px solid #d29c4b;
         }
 
         .response{
-            font-family: 'Times New Roman', Times, serif;
+            font-family: sans-serif;
             font-size: 20px;
-            margin: 50px;
+            margin-left: 50px;
+            margin-right: 50px;
             text-align: justify;
+        }
+
+        .highlight{
+            color: lightblue;
         }
 
     </style>
@@ -113,23 +120,54 @@
         <button onclick="document.location.href='valorant';" id="2" class="gameButton" style="background-image: url(https://i.imgur.com/LpRKcR3.png);" title="Valorant Boosting"></button>
     </div>
     
-    <div class="aboutus">
+    <div class="aboutus" id="aboutus">
         <div class="heading">About Us</div>
         <div class="response">
             Bob's Boosting is a modern gaming service providing fast and reliable boosting for a reasonable price. 
-            By providing our boosters with much greater compensation we are able to keep <b>your</b> prices low
-            while simultaneously increasing the <b>quality and speed</b> of the service.
+            By providing our boosters with much greater compensation than our competitors we are able to keep <b class="highlight">your prices low</b>
+            while simultaneously increasing the <b class="highlight">quality and speed</b> of the service by employing the highest ranked boosters.
         </div>
+        <div class="heading">Our Experience</div>
+        <div class="response">
+            While the website is new and will continue to be developed, our boosting has been perfected over years with hundreds of orders.
+            Every person working for Bob's Boosting has years of experience helping gamers reach their goals. However, due to the poor conditions in the 
+            industry where <b class="highlight">owners take up to a 70% cut on all orders</b>, we decided to set up our own business through <a href="https://discord.gg/uvJRspbxuB">Discord</a>,
+            and now through this website. 
+            <br><br>
+            Because all of the owners are also boosters we are able to  <b class="highlight">keep our cut at 20%</b>, far below the industry standard. Therefore providing you with an inexpensive
+            boost without sacrificing quality in any way.
+        </div>
+        <div class="heading">Reviews</div>
+        <div class="response">
+            Join our <a href="https://discord.gg/uvJRspbxuB">Discord</a> server to see reviews and previous orders or ask the owners or boosters any questions you may
+            have.
+        </div>
+    <br><br>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>aaaaaaaa
 
     <script>
+        var aboutus = document.getElementById("aboutus")
         function updateButtonSize() {
             for (let i = 0; i < 3; i++) {
                 document.getElementById(i).style.width = 250 + window.innerWidth/20 + "px";
                 document.getElementById(i).style.height = 330 + window.innerWidth/12 + "px";
             } 
+            format()
         }
+
+        function format(){
+            if (window.innerWidth < 500){
+                aboutus.style.width = "90%"
+                aboutus.style.left = "5%"
+            } else if (window.innerWidth < 1300){
+                aboutus.style.width = "70%"
+                aboutus.style.left = "15%"
+            } else {
+                aboutus.style.width = "50%"
+                aboutus.style.left = "25%"
+            }
+        }
+
         updateButtonSize()
         window.onresize = updateButtonSize;
 
