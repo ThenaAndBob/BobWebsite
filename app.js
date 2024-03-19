@@ -287,7 +287,7 @@ async function handleResponse(response) {
 }
     
 function calculatePrice(body){
-    if (body.addwins < 0 || body.addwins > 5){
+    if (body.addwins < 0 || body.addwins > 5 || (body.addwins - Math.floor(body.addwins)) != 0){
         return -1
     }
     var price = 0
