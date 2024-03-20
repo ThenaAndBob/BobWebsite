@@ -22,9 +22,13 @@
     width: 100%;
 }
 
-a.nodec, a.nodec:hover, a.nodec:visited, a.nodec:active {
+a.nodec, a.nodec:visited, a.nodec:active {
     color: inherit;
     text-decoration: none;
+}
+
+a.nodec:hover{
+    color: #d29c4b;
 }
 
 .l{
