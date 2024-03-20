@@ -1,34 +1,26 @@
-<!-- index.html -->
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Chat</title>
+  <title>Document</title>
+
+  <style>
+    .box {
+        background-color: rgb(255 255 255 / 30%);
+        backdrop-filter: blur(10px);
+      }
+
+      body {
+        background-image: url("https://live.mdnplay.dev/en-US/docs/Web/CSS/backdrop-filter/anemones.jpg");
+      }
+
+  </style>
 </head>
 <body>
-  <ul id="messages"></ul>
-  <form id="form" action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
-  </form>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script>
-    $(function () {
-      const socket = io();
-
-      $('form').submit(function() {
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-      });
-
-      socket.on('chat message', function(msg) {
-        $('#messages').append($('<li>').text(msg));
-      });
-    });
-  </script>
+  <div class="container">
+    <div class="box">
+      <p>backdrop-filter: blur(10px)</p>
+    </div>
+  </div>  
 </body>
 </html>
