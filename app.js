@@ -538,6 +538,10 @@ app.get('/favicon.ico', (req, res) =>{
     res.sendFile('favicon.ico', {root: __dirname})
 })
 
+app.get('/sitemap.xml', (req, res) =>{
+    res.sendFile('sitemap.xml', {root: __dirname})
+})
+
 app.get('/login', (req, res) => {
     res.render("login.ejs", {
         formtype: "Log in",
