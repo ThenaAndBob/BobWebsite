@@ -20,7 +20,7 @@ var bodyParser = require('body-parser');
 const { error } = require('console');
 const db = new sqlite3.Database('test.db'); // This constant opening and closing might be bad FIX. IF this is slow figure out a better way ig.
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8080 } = process.env;
-const base = "https://api-m.sandbox.paypal.com";
+const base = "https://api-m.paypal.com";
 var corsOptions = {
   origin: 'https://bobsboosting.com',
   optionSuccessStatus: 200
