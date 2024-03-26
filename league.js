@@ -112,10 +112,6 @@ function checkout(a){
     checkinvalidranks()
 }
 
-function checkinvalidranks(){
-    
-}
-
 function romanButtons(oort){
     if (oort == 2){
         document.getElementById("div2").innerHTML = "<button onclick='chooseRankScript(8, 2)' class='romanNumeralButton'>IV</button><button onclick='chooseRankScript(9, 2)' class='romanNumeralButton'>III</button><button onclick='chooseRankScript(10, 2)' class='romanNumeralButton'>II</button><button onclick='chooseRankScript(11, 2)' class='romanNumeralButton'>I</button>";
