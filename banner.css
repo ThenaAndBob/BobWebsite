@@ -1,6 +1,6 @@
 .banner {
     width: 30%;
-    min-width: 450px;
+    min-width: min(450px, 100%);
     height: 55px;
     font-size: 30px;
     font-family: 'Dangrek';
