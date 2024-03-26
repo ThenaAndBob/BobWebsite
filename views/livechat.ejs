@@ -242,9 +242,6 @@
 
         var i
 
-        console.log(chat)
-        console.log(chat[0])
-        console.log(chat.content)
         if (chat.length > 0){
             chat.forEach((element) => {
                 console.log(element)
@@ -270,7 +267,6 @@
         })
 
         socket.on("boostdetails", (boost)=>{
-            console.log("boostdetails")
             if (boost){
                 formatboostinfo(boost)
             }
