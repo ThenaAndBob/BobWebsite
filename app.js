@@ -158,18 +158,13 @@ function socketjoinchat(socket, username, usertype="username", callback){
 }
 
 function updatemessages(content, sender, chatID){
-    invalidchars = new RegExp('|¬')
-    if (!invalidchars.test(content)){
-        console.log(content, sender, chatID)
-        db.run(`INSERT INTO messages (content, sender, chatID) VALUES ('${content}', '${sender}', '${chatID}')`, (err)=>{
-            console.log("error in updatemessages: " + err)
-            if (!err){
-                return "G"
-            }
-        })
-    } else {
-        return "Invalid characters"
-    }
+    console.log(content, sender, chatID)
+    db.run(`INSERT INTO messages (content, sender, chatID) VALUES ('${content}', '${sender}', '${chatID}')`, (err)=>{
+        console.log("error in updatemessages: " + err)
+        if (!err){
+            return "G"
+        }
+    })
 }
   
 function setupchatconnection(username, extraparams, usertype="username"){
@@ -634,7 +629,7 @@ io.on("connection", socket => {
             // Store message in database
             socket.to(socket.chatID).emit("receiveMessage", content, socket.username)
             result = updatemessages(content, socket.username, socket.chatID)
-            // Can send something saying that the message could not be stored in the databse as it contained ¬ or |
+            console.log(result)
         } else {
             console.log("haxor?") // Only way to get here should be by being a haxor or if they are on the livechat html page before the server is open :) FIX make the user refresh/re log in
         }
