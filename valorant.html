@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Dangrek' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Tauri' rel='stylesheet'>
     <link rel="stylesheet" href="/banner.css">
     <link rel="icon" href="https://bobsboosting.com/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="https://bobsboosting.com/favicon.ico" type="image/x-icon">
@@ -69,7 +70,7 @@
             background-color: #04131d;
             border-radius: 10px;
             border-color: #d29c4b;
-            font-family: Impact, 'Arial Narrow Bold', sans-serif;
+            font-family: 'Tauri';
             font-size: 40px;
             color: #d29c4b;
             margin: 2%;
@@ -187,6 +188,13 @@
             border-radius: 5px;
         }
 
+        h1 {
+            color: #d29c4b; 
+            font-family: 'Tauri'; 
+            text-align: center; 
+            text-shadow: 3px 3px 0px black;
+        }
+
 
     </style>
 
@@ -202,9 +210,9 @@
     <div class="container">
         <div id="d1" class="gameButton" >
             <div class="currentrank">
-                <h1 style="color: #d29c4b; font-family: Arial, Helvetica, sans-serif;"><b>Current Rank</b></h1>
+                <h1>Current Rank</h1>
                 <div id="rank1" class="selected iron"></div>
-                <div id="rankNumber1" style="font-size: 40px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: #d29c4b;">1</div>
+                <div id="rankNumber1"><h1>1</h1></div>
                 <div onclick="checkout(1)" class="rankbuttons"> 
                     <button onclick="chooseRankScript(0, 1)" class="button iron"></button>
                     <button onclick="chooseRankScript(1, 1)" class="button bronze"></button>
@@ -225,9 +233,9 @@
 
         <div id="d2" class="gameButton" >
             <div class="currentrank">
-                <h1 style="color: #d29c4b; font-family: Arial, Helvetica, sans-serif;"><b>Desired Rank</b></h1>
+                <h1>Desired Rank</h1>
                 <div id="rank2" class="selected iron"></div>
-                <div id="rankNumber2" style="font-size: 40px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: #d29c4b;">1</div>
+                <div id="rankNumber2"><h1>1</h1></div>
                 <div onclick="checkout(2)" class="rankbuttons"> 
                     <button onclick="chooseRankScript(0, 2)" class="button iron"></button>
                     <button onclick="chooseRankScript(1, 2)" class="button bronze"></button>
@@ -248,7 +256,7 @@
         
         <div id="d3" class="gameButton">
             <div class="checkoutContainer">
-                <h1 style="color: #d29c4b; font-family: Arial, Helvetica, sans-serif;"><b>Checkout</b></h1>
+                <h1>Checkout</h1>
                 <hr style="border: 0 none; height:5px; background-color: #d29c4b;">
 
                 <div class="extraboxes" onclick=toggle()>

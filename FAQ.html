@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/banner.css">
     <link rel="icon" href="https://bobsboosting.com/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="https://bobsboosting.com/favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Tauri' rel='stylesheet'>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5ELYSX1G0">
     </script>
@@ -21,31 +22,41 @@
 
     <style>
         body {
-            background-color: #04131d;
+            background-image: url("https://i.imgur.com/6wPRCCY.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
         }
 
         .container {
-            position: absolute;
+            position: relative;
             top:100px;
-            left: 25%;
+            left: calc(25% - 200px);
             transform: translateX(-50%);
             width:50%;
-            height: 100%;
             color: #d29c4b;
             font-family: Arial, Helvetica, sans-serif;
+            backdrop-filter: blur(40px);
+            border: 3px solid #d29c4b;
+            border-radius: 10px;
+            padding: 20px;
+            filter: drop-shadow(0px 0px 50px black);
         }
 
         .title{
-            font-size: 80px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
-            text-decoration: underline;
+            font-size: min(60px, 16vw);
+            font-family: 'Tauri'; 
             text-align: center;
+            text-shadow: 1px 1px 0px black;
+            font-weight: bold;
         }
 
         .question{
             font-size: 25px;
             font-weight: bold;
             text-align: left;
+            color: white;
+            text-shadow: 2px 2px 0px #04131d;
         }
 
         .answer{
@@ -53,6 +64,15 @@
             color: white;
             text-align: left;
             margin: 5px;
+            text-shadow: 1px 1px 0px black;
+        }
+
+        a.highlight{
+            color: lightblue;
+        }
+
+        .bottom{
+            position: relative;
         }
 
     </style>
@@ -72,14 +92,14 @@
         <div class="title" id="title">Frequently Asked Questions</div>
 
         <br>
-        <div class="question">Why choose Bob's Boosting?</div><br>
+        <div class="question">Why choose Bob's Boosting?</div>
         <div class="answer">
             We have successfully completed 100+ boosts, with most boosts taking mere  days to complete. Compared to the competition Bob’s Boosting also offers up to 50% cheaper prices.    
         </div>
 
-        <br><br><br>
+        <br><br>
 
-        <div class="question">How are you able to keep your prices low while maintaining quality?</div><br>
+        <div class="question">How are you able to keep your prices low while maintaining quality?</div>
         <div class="answer">
             Despite providing boosting at a cheap price we are able to keep the excellent customer service and speed of boosting by only taking a 20% cut 
             (compared to the industry standard of 50-70%). This means that the boosters still get paid more than other companies despite our low prices
@@ -87,40 +107,39 @@
 
         </div>
 
-        <br><br><br>
+        <br><br>
 
-        <div class="question">I don't want to share my account details, could I get boosted in another way?</div><br>
+        <div class="question">I don't want to share my account details, could I get boosted in another way?</div>
         <div class="answer">Absolutely! Our site also offers a high-quality duo boosting service. This option can be selected by  choosing the “Duo boosting” option at checkout. </div>
-
-        <br><br><br>
-
-        <div class="question">Do you use cheats?</div><br>
-        <div class="answer">No, we have never and will never use cheats or engage in any activity which may risk a clients account.</div>
-
-        <br><br><br>
-
-        <div class="question">Where can I contact customer support?</div><br>
-        <div class="answer">We are always here to help. Any and all questions or specifications you may have are handled at our <a href="https://discord.gg/uvJRspbxuB">discord server</a> with 24/7 customer service.</div>
-
-        <br><br><br>
-
-        <div class="question">Are there any risks?</div><br>
-        <div class="answer">No, none of the boosters in Bob’s boosting have ever used cheats and never will also.We also  offer the use of a VPN on all of our boosts as a free add-on, in order to ensure maximum privacy. None of the 100+ boosts we have completed have ever resulted in a ban</div>
-
-        <br><br><br>
-
-        <div class="question">Can I play while the order is ongoing?</div><br>
-        <div class="answer">Yes, of course! All our services offer flexible scheduling. To schedule which times you wish to play,simply contact your current booster</div>
-
-        <br><br><br>
-
-        <div class="question">Can I work with Bob's Boosting?</div><br>
-        <div class="answer">Yes, join our discord to discuss job opportunities.</div>
 
         <br><br>
 
+        <div class="question">Do you use cheats?</div>
+        <div class="answer">No, we have never and will never use cheats or engage in any activity which may risk a clients account.</div>
 
+        <br><br>
 
+        <div class="question">Where can I contact customer support?</div>
+        <div class="answer">We are always here to help. Any and all questions or specifications you may have are handled at our <a class="highlight"href="https://discord.gg/uvJRspbxuB">discord server</a> with 24/7 customer service.</div>
+
+        <br><br>
+
+        <div class="question">Are there any risks?</div>
+        <div class="answer">No, none of the boosters in Bob’s boosting have ever used cheats and never will also.We also  offer the use of a VPN on all of our boosts as a free add-on, in order to ensure maximum privacy. None of the 100+ boosts we have completed have ever resulted in a ban</div>
+
+        <br><br>
+
+        <div class="question">Can I play while the order is ongoing?</div>
+        <div class="answer">Yes, of course! All our services offer flexible scheduling. To schedule which times you wish to play,simply contact your current booster</div>
+
+        <br><br>
+
+        <div class="question">Can I work with Bob's Boosting?</div>
+        <div class="answer">Yes, join our discord to discuss job opportunities.</div>
+    </div>
+
+    <div class="bottom">
+        <br><br><br><br><br><br><br><br>
     </div>
 
     <script>
@@ -133,7 +152,7 @@
                 banner.style.wordSpacing = "0px"
             } else {banner.style.wordSpacing = "22px"}
             if (window.innerWidth < 1100){
-                cons.left = "5%"
+                cons.left = "calc(5% - 23px)"
                 cons.width = "90%"
                 cons.transform = "translateX(0)"
             } else {
