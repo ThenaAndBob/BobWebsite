@@ -118,11 +118,7 @@ function getchatlogs(result, extraparams, formtype, usertype="username"){
                 }
                 row = all[0]
                 details += row.boostername 
-                db.all(`SELECT content, sender FROM messages WHERE chatID = '${row.chatID}' ORDER BY messageID ASC;`, (err, data) =>{ // FIX currently would not work for more than one chat per username (/account)
-                    data.forEach((crow) =>{
-                        chat += `${crow.content}|${crow.sender}¬` // IMPORTANT FIX THIS MEANS YOU ARE NOT ALLOWED TO HAVE "|" or "¬" IN ANY TEXT THAT APPEARS IN THE DATABASE, SO LIVE CHAT OR USERNAME
-                    })
-                    console.log(chat)
+                db.all(`SELECT content, sender FROM messages WHERE chatID = '${row.chatID}' ORDER BY messageID ASC;`, (err, chat) =>{ // FIX currently would not work for more than one chat per username (/account)
                     livechat(chat, details, extraparams, usertype)
                 })
             })
@@ -133,10 +129,12 @@ function getchatlogs(result, extraparams, formtype, usertype="username"){
 function livechat(chat, enemyname, extraparams, usertype){
     req = extraparams[0]
     res = extraparams[1]
+    console.log("chat contents")
+    console.log(chat)
     res.render("livechat.ejs", {
         username: req.body.username,
         password: req.body.password,
-        chat: chat,
+        chat: JSON.stringify(chat),
         enemyname: enemyname,
 		usertype: usertype,
     })

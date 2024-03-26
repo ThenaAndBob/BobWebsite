@@ -201,7 +201,7 @@
         var username = '<%-username%>'
         var password = '<%-password%>'
         var usertype = '<%-usertype%>'
-        var chat = '<%-chat%>'
+        var chat = JSON.parse('<%-chat%>')
         var temp = ""
 
         var d1 = document.getElementById("d1")
@@ -242,13 +242,13 @@
 
         var i
 
-
+        console.log(chat)
+        console.log(chat[0])
+        console.log(chat.content)
         if (chat.length > 0){
-            chat = chat.slice(0, -1)
-
-            chat.split('¬').forEach((element) => {
-                temp = element.split("|")
-                displayMessage(temp[0], temp[1])
+            chat.forEach((element) => {
+                console.log(element)
+                displayMessage(element.content, element.sender)
             })
         }
         
