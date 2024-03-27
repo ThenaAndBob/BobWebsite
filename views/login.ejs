@@ -64,7 +64,7 @@
             position: absolute;
             min-width: 400px;
             min-height: 358px;
-            height: 400px;
+            border-radius: 20px;
         }
 
         .title{
@@ -87,7 +87,20 @@
         }
 
         .info{
-            color: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        .disclaimer{
+            font-weight: bold;
+            color: black;
+            filter: drop-shadow(0px 0px 25px white);
+        }
+
+        a.highlight{
+            color: #04131d;
+            font-weight: bold;  
+            backdrop-filter: blur(20px);
         }
 
 
@@ -115,7 +128,7 @@
                 <div id="formerror"></div>
                 <button class="bob" type="submit" id="submitbutton"><b><%=formtype%></b></button>
             </form>   
-            <div id=disclaimer></div>
+            <div id=disclaimer class="disclaimer"></div>
             <br><br>
         </div> 
     </div>
@@ -133,7 +146,7 @@
         if (formtype == "Sign up"){
             document.getElementById("form").action = `/signup/${orderID}`
             document.getElementById("title").innerHTML = "Signup"
-            document.getElementById("info").innerHTML = "OR <br><br> Use <a href='https://discord.gg/uvJRspbxuB'> Discord </a> chat instead by providing your Order ID: <%=orderID%> <br>"
+            document.getElementById("info").innerHTML = "OR <br><br> Use <a href='https://discord.gg/uvJRspbxuB' class='highlight'>Discord</a> chat instead by providing your Order ID: <%=orderID%> <br>"
             document.getElementById("disclaimer").innerHTML = "Sign up with email or remember your Order ID incase you forget your password!"
         }
     </script>
