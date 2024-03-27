@@ -50,7 +50,7 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            filter: drop-shadow(0px 0px 3px #d29c4b);
+            filter: drop-shadow(0px 0px 3px lightblue);
         }
 
         .iron {background-image: url('https://i.imgur.com/LXeIjWK.png');}
@@ -69,10 +69,10 @@
             aspect-ratio: 1/1;
             background-color: #04131d;
             border-radius: 10px;
-            border-color: #d29c4b;
+            border-color: lightblue;
             font-family: 'Tauri';
             font-size: 40px;
-            color: #d29c4b;
+            color: white;
             margin: 2%;
             padding: 0px;
         }
@@ -93,7 +93,7 @@
             height: 27.5%;
             background-color: #04131d;
             border-radius: 10px;
-            border-color: #d29c4b;
+            border-color: lightblue;
             z-index: 110;
             margin: 1%;
             margin-top: 8px;
@@ -127,7 +127,7 @@
             height: 100%;
             position: relative;
             background-color: #04131d;
-            border: 5px solid #d29c4b;
+            border: 2px solid lightblue;
             align-items: center;
             border-radius: 5px;
         }
@@ -145,8 +145,8 @@
             background-color: #04131d;
             height: 70%;
             position: relative;
-            border: 5px solid #d29c4b;
-            color: #d29c4b;
+            border: 2px solid lightblue;
+            color: white;
             width: min(100%, 428px);
             height: 350px;
             border-radius: 5px;
@@ -155,7 +155,7 @@
         .box{
             transform: scale(2);
             vertical-align: middle;
-            accent-color: #d29c4b;
+            accent-color: lightblue;
         }
 
         .extraboxes{
@@ -165,7 +165,7 @@
             vertical-align: middle; 
             font-size: 18px; 
             font-family: Arial, Helvetica, sans-serif;
-            color: #d29c4b;
+            color: white;
             margin:17px;
         }
 
@@ -183,18 +183,21 @@
 
         input[type="number"]{
             background-color: #072335;
-            color: #d29c4b;
-            border: 2px solid #d29c4b;
+            color: white;
+            border: 2px solid lightblue;
             border-radius: 5px;
         }
 
         h1 {
-            color: #d29c4b; 
+            color: white; 
             font-family: 'Tauri'; 
             text-align: center; 
             text-shadow: 3px 3px 0px black;
         }
 
+        a.highlight{
+            color: lightblue;
+        }
 
     </style>
 
@@ -257,7 +260,7 @@
         <div id="d3" class="gameButton">
             <div class="checkoutContainer">
                 <h1>Checkout</h1>
-                <hr style="border: 0 none; height:5px; background-color: #d29c4b;">
+                <hr style="border: 0 none; height:2px; background-color: lightblue;">
 
                 <div class="extraboxes" onclick=toggle()>
                     <b>Play with booster (+50%)</b> <input onclick=toggle() type="checkbox" id="duobutton" class="box">
@@ -271,7 +274,7 @@
 
                 <div id="price" class="price"><b>€0</b></div>             
                 <div id="paypal-button-container" class="paypalbutton"></div>
-                Or join our <a href="https://discord.gg/uvJRspbxuB">discord</a> for discounts and other payment methods.
+                Or join our <a href="https://discord.gg/uvJRspbxuB" class="highlight">discord</a> for discounts and other payment methods.
                 <p id="result-message"></p>
             </div>
         </div>

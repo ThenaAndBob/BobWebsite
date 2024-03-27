@@ -556,6 +556,10 @@ app.get('/overwatch.js', (req, res) =>{
     res.sendFile("overwatch.js", {root: __dirname})
 })
 
+app.get('/bannerfollow.js', (req, res) =>{
+    res.sendFile("bannerfollow.js", {root: __dirname})
+})
+
 app.get('/league.js', (req, res) =>{
     res.sendFile("league.js", {root: __dirname})
 })
