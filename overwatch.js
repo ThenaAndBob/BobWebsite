@@ -41,7 +41,7 @@ function chooseRankScript(x, oneOrTwo) {
     }
     else {
         rankNumber = document.getElementById("rankNumber" + oneOrTwo);
-        rankNumber.innerHTML = newRank;
+        rankNumber.innerHTML = "<h1>" + newRank + "</h1>";
         divisionStore[oneOrTwo-1] = newRank;
     }
     document.getElementById("conclusion").innerHTML = "<b>" + rankStore[0] + " " + divisionStore[0] + " " + "->" +  " " + rankStore[1] + " " + divisionStore[1] + "</b>"

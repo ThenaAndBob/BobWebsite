@@ -62,7 +62,7 @@ function chooseRankScript(x, oneOrTwo) {
     }
     else {
         rankNumber = document.getElementById("rankNumber" + oneOrTwo);
-        rankNumber.innerHTML = newRank;
+        rankNumber.innerHTML = "<h1>" + newRank + "</h1>";
         divisionStore[oneOrTwo-1] = newRank;
     }
     conclusion = document.getElementById("conclusion");
