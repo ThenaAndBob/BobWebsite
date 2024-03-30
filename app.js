@@ -304,9 +304,9 @@ function calculatePrice(body){
             70]
     } else if (body.game == "overwatch"){
         divperrank = 5
-        numranks = 7 // change this to 10 FIX NEW OVERWATCH RANK
+        numranks = 8
         winsperdiv = 4
-        ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "5", "4", "3", "2", "1"]
+        ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "Champion", "5", "4", "3", "2", "1"]
         prices = [2.2, 2.4, 2.6, 2.8,  
                 3, 3.25, 3.5, 3.75, 4,  
                 4.33, 4.66, 5, 5.33, 5.66,  

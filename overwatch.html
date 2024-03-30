@@ -35,8 +35,6 @@
             position: relative;
             display: flex;
             text-align: center;
-            width: 100%;
-            height: 100%;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -47,9 +45,10 @@
             margin-right: 2vw;
             margin-top: 60px;
             background-repeat: no-repeat;   
-            background-size: cover;
+            background-size: cover; 
             background-position: center;
             filter: drop-shadow(0px 0px 3px lightblue);
+            height: 0px;
         }
 
         .bronze{background-image: url('https://i.imgur.com/tAGTnxa.png')}
@@ -59,6 +58,7 @@
         .diamond{background-image: url('https://i.imgur.com/rGbaSYN.png')}
         .master{background-image: url('https://i.imgur.com/kl5YjI0.png')}
         .grandmaster{background-image: url('https://i.imgur.com/qdWlM12.png')}
+        .champion{background-image: url('https://i.imgur.com/nNvupDI.png');}
 
         .romanNumeralButton {
             background-repeat: no-repeat;
@@ -89,8 +89,8 @@
         .button {
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            width: 12%;
-            height: 33%;
+            width: 10%;
+            aspect-ratio: 1/1;
             background-color: #04131d;
             border-radius: 10px;
             border-color: lightblue;;
@@ -143,7 +143,6 @@
 
         .checkoutContainer{
             background-color: #04131d;
-            height: 70%;
             position: relative;
             border: 2px solid lightblue;
             color: white;
@@ -224,11 +223,12 @@
                     <button onclick="chooseRankScript(4, 1)" class="button diamond"></button>
                     <button onclick="chooseRankScript(5, 1)" class="button master"></button>
                     <button onclick="chooseRankScript(6, 1)" class="button grandmaster"></button>
-                    <button onclick="chooseRankScript(7, 1)" class="romanNumeralButton">5</button>
-                    <button onclick="chooseRankScript(8, 1)" class="romanNumeralButton">4</button>
-                    <button onclick="chooseRankScript(9, 1)" class="romanNumeralButton">3</button>
-                    <button onclick="chooseRankScript(10, 1)" class="romanNumeralButton">2</button> 
-                    <button onclick="chooseRankScript(11, 1)" class="romanNumeralButton">1</button> 
+                    <button onclick="chooseRankScript(7, 1)" class="button champion"></button>
+                    <button onclick="chooseRankScript(8, 1)" class="romanNumeralButton">5</button>
+                    <button onclick="chooseRankScript(9, 1)" class="romanNumeralButton">4</button>
+                    <button onclick="chooseRankScript(10, 1)" class="romanNumeralButton">3</button>
+                    <button onclick="chooseRankScript(11, 1)" class="romanNumeralButton">2</button> 
+                    <button onclick="chooseRankScript(12, 1)" class="romanNumeralButton">1</button> 
                 </div>
             </div>
         </div>
@@ -246,11 +246,12 @@
                     <button onclick="chooseRankScript(4, 2)" class="button diamond"></button>
                     <button onclick="chooseRankScript(5, 2)" class="button master"></button>
                     <button onclick="chooseRankScript(6, 2)" class="button grandmaster"></button>
-                    <button onclick="chooseRankScript(7, 2)" class="romanNumeralButton">5</button>
-                    <button onclick="chooseRankScript(8, 2)" class="romanNumeralButton">4</button>
-                    <button onclick="chooseRankScript(9, 2)" class="romanNumeralButton">3</button>
-                    <button onclick="chooseRankScript(10, 2)" class="romanNumeralButton">2</button> <!--I hate it-->
-                    <button onclick="chooseRankScript(11, 2)" class="romanNumeralButton">1</button> <!--I hate it-->
+                    <button onclick="chooseRankScript(7, 2)" class="button champion"></button>
+                    <button onclick="chooseRankScript(8, 2)" class="romanNumeralButton">5</button>
+                    <button onclick="chooseRankScript(9, 2)" class="romanNumeralButton">4</button>
+                    <button onclick="chooseRankScript(10, 2)" class="romanNumeralButton">3</button>
+                    <button onclick="chooseRankScript(11, 2)" class="romanNumeralButton">2</button> <!--I hate it-->
+                    <button onclick="chooseRankScript(12, 2)" class="romanNumeralButton">1</button> <!--I hate it-->
                 </div>
             </div>
         </div>
@@ -262,10 +263,11 @@
 
                 <div class="extraboxes" onclick=toggle()>
                     <b>Play with booster (+50%)</b> <input onclick=toggle() type="checkbox" id="duobutton" class="box">
-                </div>
+                </div>  
                 <div class="extraboxes">
                     <b>Additional wins</b><input type="number" id="quantity" oninput="checkout()" name="quantity" min="0" max="5"> 
                 </div>
+                
                 <div class="extraboxes" id="conclusion">
                     <b>Gold 5 -> Gold 5</b>
                 </div>

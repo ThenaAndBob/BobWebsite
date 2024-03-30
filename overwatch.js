@@ -1,5 +1,5 @@
 // Globals cause fuck it XD
-const ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "5", "4", "3", "2", "1"];
+const ranks = ["Bronze", "Silver", "Gold", "Platinum", "Diamond", "Master", "Grandmaster", "Champion", "5", "4", "3", "2", "1"];
 // ffoawgopak my life but these are the variables that will be used to calculate payment
 var rankStore= ["Gold", "Gold"]
 var divisionStore = ["5", "5"]
@@ -33,7 +33,7 @@ function updateButtonSize() {
 function chooseRankScript(x, oneOrTwo) {
     newRank = ranks[x];
 
-    if (x <= 6) {
+    if (x <= 7) {
         rankImage = document.getElementById("rank" + oneOrTwo);
         rankImage.classList = ["selected"];
         rankImage.classList.add(newRank.toLowerCase());
@@ -48,16 +48,19 @@ function chooseRankScript(x, oneOrTwo) {
 }
 
 // Prices 
-const prices = [2.2, 2.4, 2.6, 2.8,  
-                3, 3.25, 3.5, 3.75, 4,  
-                4.33, 4.66, 5, 5.33, 5.66,  
-                6,6.4,6.8,7.2,7.6,
-                8, 8.5, 9, 9.5, 10,
-                11, 12, 13, 14, 15,
-                18, 21, 23, 25, 27, 32]
+const prices = [2, 2.5, 3, 3.2,
+                3.4, 3.6, 3.8, 4, 4.25,
+                4.5, 4.75, 5, 5.33, 5.66,
+                6, 6.5, 7, 7.5, 8,
+                8.5, 9, 9.5, 10, 10.5,
+                11, 12, 14, 15, 17,
+                25, 35, 50, 65, 85,
+                105, 125, 150, 175, 200,
+                220
+            ]
 function checkout(a){
-    startIndex = ranks.indexOf(rankStore[0])*5 + ranks.indexOf(divisionStore[0])-7;
-    endIndex = ranks.indexOf(rankStore[1])*5 + ranks.indexOf(divisionStore[1])-7;
+    startIndex = ranks.indexOf(rankStore[0])*5 + ranks.indexOf(divisionStore[0])-8;
+    endIndex = ranks.indexOf(rankStore[1])*5 + ranks.indexOf(divisionStore[1])-8;
     if (endIndex < startIndex){
         if (a == 1){
             chooseRankScript(ranks.indexOf(rankStore[0]),2)
