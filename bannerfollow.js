@@ -1,7 +1,6 @@
 window.onscroll = scrollFunction
 
 function scrollFunction(){
-    console.log(document.body.scrollTop)
     document.body.scrollTop = 200
     banner = document.getElementById("banner")
     if (document.documentElement.scrollTop < 50) {
