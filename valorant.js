@@ -116,11 +116,11 @@ function checkout(a){
 function romanButtons(oort){
     if (oort == 2){
         document.getElementById("div2").innerHTML = "<button onclick='chooseRankScript(8, 2)' class='romanNumeralButton'>1</button><button onclick='chooseRankScript(9, 2)' class='romanNumeralButton'>2</button><button onclick='chooseRankScript(10, 2)' class='romanNumeralButton'>3</button>";
-        document.getElementById("rankNumber" + "2").innerHTML = "1";
+        document.getElementById("rankNumber" + "2").innerHTML = "<h1>1</h1>";
         divisionStore[1] = "1"
     }
     document.getElementById("div1").innerHTML = "<button onclick='chooseRankScript(8, 1)' class='romanNumeralButton'>1</button><button onclick='chooseRankScript(9, 1)' class='romanNumeralButton'>2</button><button onclick='chooseRankScript(10, 1)' class='romanNumeralButton'>3</button>";
-    document.getElementById("rankNumber" + "1").innerHTML = "1";
+    document.getElementById("rankNumber" + "1").innerHTML = "<h1>1</h1>";
     divisionStore[0] = "1"
     rankStore[0] = "Ascendant";
     chooseRankScript(6, 1);
